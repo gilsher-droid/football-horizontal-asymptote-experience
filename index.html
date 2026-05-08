@@ -738,46 +738,30 @@ function update(){
   const dc=+denCoef.value;
 
   scoreboard.textContent=`מונה ${nd} : ${dd} מכנה`;
-
   scene.className='stadium';
 
   let text='';
   let ans='';
 
   if(nd>dd){
-
     scene.classList.add('sky');
-
-    caseTitle.textContent='מצב מסי ☝️☝️';
-
-    text=`החזקה במונה גדולה יותר (${nd} לעומת ${dd}), ולכן המונה משתלט על המשחק. הפונקציה לא מתייצבת על גובה קבוע.`;
-
+    caseTitle.textContent='מצב מסי ☝️☝️ — אין אסימפטוטה אופקית';
+    text=`מצב מסי: החזקה במונה גדולה יותר (${nd} לעומת ${dd}), ולכן המונה משתלט על המשחק. הפונקציה לא מתייצבת על גובה קבוע.`;
     ans='אין';
-
   }
 
   else if(nd<dd){
-
     scene.classList.add('ground');
-
-    caseTitle.textContent='מצב רונאלדו ⚽';
-
-    text=`החזקה במכנה גדולה יותר (${dd} לעומת ${nd}), ולכן המכנה שולט במשחק והשבר מתקרב לאפס.`;
-
+    caseTitle.textContent='מצב רונאלדו ⚽ — האסימפטוטה היא y = 0';
+    text=`מצב רונאלדו: החזקה במכנה גדולה יותר (${dd} לעומת ${nd}), ולכן המכנה שולט במשחק והשבר מתקרב לאפס.`;
     ans='y = 0';
-
   }
 
   else{
-
     scene.classList.add('equal');
-
-    caseTitle.textContent='מצב ניימאר 🤸';
-
+    caseTitle.textContent='מצב ניימאר 🤸 — VAR של מקדמים';
     const val=+(nc/dc).toFixed(3);
-
-    text=`יש תיקו בדרגות, ולכן הולכים ל־VAR של המקדמים: ${nc}/${dc}.`;
-
+    text=`מצב ניימאר: יש תיקו בדרגות, ולכן הולכים ל־VAR של המקדמים: ${nc}/${dc}.`;
     ans=`y = ${val}`;
   }
 
