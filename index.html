@@ -24,7 +24,16 @@
     .stadium::before{content:'';position:absolute;inset:20px;border:4px solid rgba(255,255,255,.9);border-radius:20px}.midline{position:absolute;top:20px;bottom:20px;left:50%;width:4px;background:rgba(255,255,255,.9);transform:translateX(-50%)}.circle{position:absolute;left:50%;top:50%;width:132px;height:132px;border:4px solid rgba(255,255,255,.9);border-radius:50%;transform:translate(-50%,-50%)}
     .goal{position:absolute;top:145px;width:36px;height:140px;border:5px solid white;background:rgba(255,255,255,.18);z-index:2}.goal.left{left:12px;border-right:0}.goal.right{right:12px;border-left:0}
     .scoreboard{position:absolute;left:50%;top:18px;transform:translateX(-50%);background:rgba(16,32,51,.9);color:#fff;border-radius:18px;padding:10px 18px;font-weight:800;font-size:20px;z-index:5;box-shadow:0 8px 22px rgba(0,0,0,.24)}
-    .player{position:absolute;bottom:48px;font-size:74px;z-index:6;transition:.8s cubic-bezier(.2,.9,.2,1)}.player.left{left:185px}.player.right{right:185px}.ball{position:absolute;left:50%;top:230px;transform:translate(-50%,-50%);font-size:52px;z-index:7;transition:.9s cubic-bezier(.2,.9,.2,1)}
+    .player{position:absolute;bottom:38px;width:120px;height:170px;z-index:6;transition:.8s cubic-bezier(.2,.9,.2,1)}.player.left{left:150px}.player.right{right:150px}
+    .body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:70px;height:90px;border-radius:20px;background:#1f3c88}
+    .body.red{background:#b61d2c}.body.yellow{background:#f2c230}
+    .head{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:#ffd7b1}
+    .leg{position:absolute;bottom:-36px;width:18px;height:48px;background:#222;border-radius:12px}.leg.left{left:38px}.leg.right{right:38px}
+    .arm{position:absolute;top:72px;width:16px;height:52px;background:#ffd7b1;border-radius:12px;transition:.7s ease}.arm.left{left:10px}.arm.right{right:10px}
+    .sky .player.left .arm.left{transform:rotate(-140deg) translateY(-22px)}.sky .player.left .arm.right{transform:rotate(140deg) translateY(-22px)}
+    .ground .player.right{transform:scale(1.08)}
+    .ground .player.right .arm.left{transform:rotate(-55deg)}.ground .player.right .arm.right{transform:rotate(55deg)}
+    .equal .player.center-fall{transform:rotate(88deg) translateY(18px)}.ball{position:absolute;left:50%;top:230px;transform:translate(-50%,-50%);font-size:52px;z-index:7;transition:.9s cubic-bezier(.2,.9,.2,1)}
     .celebration{position:absolute;opacity:0;transition:.7s ease;z-index:8;text-align:center;font-weight:900}.messi{left:74px;top:84px;color:#fff;font-size:66px}.ronaldo{right:64px;top:76px;color:#fff;font-size:66px}.neymar{left:50%;bottom:26px;transform:translateX(-50%);font-size:68px;color:#fff}.caption{display:block;background:white;color:var(--fm-ink);font-size:17px;border-radius:999px;padding:6px 12px;margin-top:4px;box-shadow:0 5px 14px rgba(0,0,0,.18)}
     .sky .ball{left:9%;top:208px;transform:translate(-50%,-50%) rotate(-35deg)}.sky .messi{opacity:1;transform:translateY(-6px)}.sky .player.left{transform:translateY(-8px) scale(1.08)}
     .ground .ball{left:91%;top:208px;transform:translate(-50%,-50%) rotate(35deg)}.ground .ronaldo{opacity:1;transform:translateY(-8px)}.ground .player.right{transform:translateY(-8px) scale(1.08)}
@@ -44,7 +53,30 @@
     </div>
     <div class="stadium" id="scene">
       <div class="midline"></div><div class="circle"></div><div class="goal left"></div><div class="goal right"></div><div class="scoreboard" id="scoreboard">מונה 2 : 2 מכנה</div>
-      <div class="player left">🔟</div><div class="player right">CR7</div><div class="ball">⚽</div>
+      <div class="player left">
+        <div class="head"></div>
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+        <div class="body"></div>
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+      </div>
+      <div class="player right">
+        <div class="head"></div>
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+        <div class="body red"></div>
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+      </div>
+      <div class="player center-fall" style="left:50%;transform:translateX(-50%);bottom:28px;scale:.72;">
+        <div class="head"></div>
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+        <div class="body yellow"></div>
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+      </div><div class="ball">⚽</div>
       <div class="celebration messi">☝️☝️<span class="caption">מצב מסי: המונה חוגג לשמיים</span></div>
       <div class="celebration ronaldo">Siuuu!<span class="caption">מצב רונאלדו: המכנה מנצח בגדול</span></div>
       <div class="celebration neymar">🤸‍♂️💫<span class="caption">מצב ניימאר: תיקו, דרמה, VAR של מקדמים</span></div>
