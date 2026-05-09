@@ -39,7 +39,77 @@
     .ground .ball{left:91%;top:208px;transform:translate(-50%,-50%) rotate(35deg)}.ground .ronaldo{opacity:1;transform:translateY(-8px)}.ground .player.right{transform:translateY(-8px) scale(1.08)}
     .equal .ball{left:50%;top:318px;transform:translate(-50%,-50%) rotate(420deg)}.equal .neymar{opacity:1;transform:translateX(-50%) rotate(-5deg)}
     .case-title{position:absolute;left:0;right:0;bottom:18px;text-align:center;color:white;font-size:22px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.28);z-index:4}.result{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch}.explain,.formula{background:white;border-radius:22px;padding:20px;border:2px solid #e8eef8}.explain h2,.formula h2{margin-top:0}.asym{font-size:42px;font-weight:bold;color:var(--fm-blue-deep);text-align:center;margin-top:28px}.note{font-size:18px;line-height:1.65}.error{color:#d33;font-weight:bold;margin-top:10px}.examples{text-align:center;margin-top:18px}.tag{display:inline-block;background:rgba(255,255,255,.85);border:1px solid #d6e6ff;border-radius:999px;padding:8px 12px;margin:4px;font-size:14px;color:var(--fm-ink);box-shadow:0 6px 16px rgba(16,32,51,.08)}
-    @media(max-width:850px){.controls,.result{grid-template-columns:1fr}.fraction{min-width:260px;font-size:25px}.player.left{left:100px}.player.right{right:100px}.messi{left:28px}.ronaldo{right:24px}.scoreboard{font-size:16px}.stadium{height:410px}}
+    @media(max-width:850px){
+      body{padding:14px}
+      .wrap{max-width:100%}
+      header{margin-bottom:16px}
+      header::before{width:72px;height:72px;border-radius:20px;font-size:44px;margin-bottom:10px}
+      header h1{font-size:28px;line-height:1.15}
+      header p{font-size:15px;line-height:1.45;padding:0 8px}
+      .panel{border-radius:24px;padding:14px}
+      .function-box{border-radius:22px;padding:14px;margin-bottom:14px}
+      .function-title{font-size:17px}
+      .fraction{min-width:0;width:100%;font-size:24px;gap:6px}
+      .controls,.result{grid-template-columns:1fr;gap:12px}
+      .box{border-radius:20px;padding:14px}
+      textarea{height:84px;font-size:15px}
+      input{font-size:16px;padding:10px}
+      label{font-size:15px;margin-bottom:7px}
+      button{width:100%;margin:6px 0;padding:12px 14px;font-size:15px}
+      .stadium{height:360px;border-radius:22px;border-width:4px;margin:16px 0}
+      .stadium::before{inset:14px;border-width:3px;border-radius:16px}
+      .midline{top:14px;bottom:14px;width:3px}
+      .circle{width:92px;height:92px;border-width:3px}
+      .goal{top:132px;width:28px;height:100px;border-width:4px}
+      .goal.left{left:8px}.goal.right{right:8px}
+      .scoreboard{top:12px;font-size:14px;padding:8px 12px;border-radius:14px;white-space:nowrap}
+      .player{width:76px;height:112px;bottom:34px}
+      .player.left{left:42px}.player.right{right:42px}
+      .player.center-fall{bottom:22px!important;scale:.55!important}
+      .body{width:46px;height:60px;border-radius:15px}
+      .head{top:12px;width:36px;height:36px}
+      .arm{top:48px;width:11px;height:36px;border-radius:10px}
+      .arm.left{left:7px}.arm.right{right:7px}
+      .leg{bottom:-24px;width:12px;height:32px;border-radius:10px}
+      .leg.left{left:25px}.leg.right{right:25px}
+      .ball{font-size:36px;top:205px}
+      .messi{left:10px;top:70px;font-size:38px;max-width:138px}
+      .ronaldo{right:10px;top:70px;font-size:34px;max-width:138px}
+      .neymar{bottom:18px;font-size:38px;width:190px}
+      .caption{font-size:12px;line-height:1.25;padding:5px 8px;white-space:normal}
+      .case-title{bottom:10px;font-size:16px;line-height:1.25;padding:0 8px}
+      .sky .ball{left:12%;top:185px}
+      .ground .ball{left:88%;top:185px}
+      .equal .ball{top:286px}
+      .sky .player.left .arm.left{transform:rotate(-165deg) translateY(-20px)}
+      .sky .player.left .arm.right{transform:rotate(165deg) translateY(-20px)}
+      .ground .player.right .arm.left{transform:rotate(55deg) translateY(12px)}
+      .ground .player.right .arm.right{transform:rotate(-55deg) translateY(12px)}
+      .explain,.formula{border-radius:18px;padding:15px}
+      .explain h2,.formula h2{font-size:19px;margin-bottom:8px}
+      .note{font-size:16px;line-height:1.55}
+      .asym{font-size:32px;margin-top:14px}
+      .examples{margin-top:12px}
+      .tag{font-size:12px;padding:7px 9px}
+    }
+    @media(max-width:420px){
+      body{padding:10px}
+      header h1{font-size:25px}
+      header p{font-size:14px}
+      .panel{padding:10px;border-radius:20px}
+      .fraction{font-size:21px}
+      .stadium{height:330px}
+      .goal{top:122px;height:88px}
+      .player{width:66px;height:100px;bottom:32px}
+      .player.left{left:30px}.player.right{right:30px}
+      .body{width:40px;height:54px}.head{width:32px;height:32px}.arm{top:44px;height:32px}.leg{height:28px;bottom:-21px}.leg.left{left:22px}.leg.right{right:22px}
+      .ball{font-size:32px;top:188px}
+      .scoreboard{font-size:12px;padding:7px 9px}
+      .messi{left:6px;top:64px;font-size:32px;max-width:118px}.ronaldo{right:6px;top:64px;font-size:29px;max-width:118px}.neymar{font-size:34px;width:170px}
+      .caption{font-size:11px;padding:4px 7px}
+      .case-title{font-size:14px;bottom:8px}
+      .sky .ball{left:14%;top:174px}.ground .ball{left:86%;top:174px}.equal .ball{top:262px}
+    }
   </style>
 </head>
 <body>
