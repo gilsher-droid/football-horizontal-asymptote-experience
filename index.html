@@ -17,7 +17,11 @@
     .panel{background:var(--fm-card);border-radius:32px;padding:26px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.66);backdrop-filter:blur(10px)}
     .function-box{background:linear-gradient(135deg,#ffffff,#f2f8ff);border:2px solid rgba(255,255,255,.8);border-radius:28px;padding:20px;margin-bottom:18px;text-align:center;box-shadow:0 14px 34px rgba(16,32,51,.10)}
     .function-title{font-weight:bold;font-size:20px;margin-bottom:12px}.fraction{display:inline-grid;grid-template-rows:auto 3px auto;gap:8px;align-items:center;font-size:32px;font-weight:bold;direction:ltr;min-width:360px}.line{height:4px;background:linear-gradient(90deg,var(--fm-pink),var(--fm-yellow),var(--fm-blue));border-radius:4px}.poly{padding:0 12px}
-    .controls{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-bottom:18px}.box{background:white;border-radius:24px;padding:18px;border:2px solid #e8eef8;box-shadow:0 10px 28px rgba(16,32,51,.08)}
+    .controls{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:18px}.box{background:white;border-radius:24px;padding:18px;border:2px solid #e8eef8;box-shadow:0 10px 28px rgba(16,32,51,.08)}
+    .rule-box h2{margin:0 0 12px;font-size:22px;color:var(--fm-blue-deep)}
+    .rule-card{background:linear-gradient(135deg,#f8fbff,#ffffff);border:1px solid #d6e6ff;border-radius:18px;padding:12px 14px;margin:10px 0;box-shadow:0 8px 20px rgba(16,32,51,.07)}
+    .rule-card strong{display:block;font-size:16px;margin-bottom:4px;color:var(--fm-ink)}
+    .rule-card span{display:block;font-size:14px;color:#52657a;line-height:1.4}
     textarea{width:100%;height:92px;border-radius:14px;border:1px solid #cdd8e8;padding:12px;font-size:16px;direction:ltr;text-align:left;font-family:monospace;resize:vertical}label{display:block;font-weight:bold;margin-bottom:10px;font-size:17px}.hint{font-size:14px;color:#52657a;line-height:1.45;margin-top:8px}input{width:100%;padding:12px;border-radius:12px;border:1px solid #cdd8e8;font-size:18px;text-align:center}
     button{border:0;border-radius:16px;background:linear-gradient(135deg,var(--fm-violet),var(--fm-blue-deep));color:white;padding:12px 18px;font-size:16px;cursor:pointer;margin:6px;box-shadow:0 10px 22px rgba(47,126,234,.25);font-weight:700}button.secondary{background:linear-gradient(135deg,var(--fm-pink),var(--fm-orange))}
     .stadium{position:relative;height:430px;background:repeating-linear-gradient(90deg,var(--grass) 0 92px,var(--grass-dark) 92px 184px);border-radius:28px;overflow:hidden;margin:20px 0;border:5px solid #fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75),0 18px 40px rgba(16,32,51,.14)}
@@ -25,8 +29,9 @@
     .goal{position:absolute;top:145px;width:36px;height:140px;border:5px solid white;background:rgba(255,255,255,.18);z-index:2}.goal.left{left:12px;border-right:0}.goal.right{right:12px;border-left:0}
     .scoreboard{position:absolute;left:50%;top:18px;transform:translateX(-50%);background:rgba(16,32,51,.9);color:#fff;border-radius:18px;padding:10px 18px;font-weight:800;font-size:20px;z-index:5;box-shadow:0 8px 22px rgba(0,0,0,.24)}
     .player{position:absolute;bottom:38px;width:120px;height:170px;z-index:6;transition:.8s cubic-bezier(.2,.9,.2,1)}.player.left{left:150px}.player.right{right:150px}
-    .body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:70px;height:90px;border-radius:20px;background:#1f3c88}
-    .body.red{background:#b61d2c}.body.yellow{background:#f2c230}
+    .body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:70px;height:90px;border-radius:20px;background:repeating-linear-gradient(90deg,#123c9c 0 12px,#b61d2c 12px 24px)}
+    .body.red{background:#ffffff;border:2px solid #d9d9d9;position:relative}
+    .body.red::after{content:'RM';position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:18px;font-weight:900;color:#111}.body.yellow{background:#f2c230}
     .head{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:#ffd7b1}
     .leg{position:absolute;bottom:-36px;width:18px;height:48px;background:#222;border-radius:12px}.leg.left{left:38px}.leg.right{right:38px}
     .arm{position:absolute;top:72px;width:16px;height:52px;background:#ffd7b1;border-radius:12px;transition:.7s ease}.arm.left{left:10px}.arm.right{right:10px}
@@ -119,7 +124,16 @@
     <div class="function-box"><div class="function-title">הפונקציה הרציונלית</div><div class="fraction"><div class="poly" id="numView">3x² + 1</div><div class="line"></div><div class="poly" id="denView">6x² - 4</div></div></div>
     <div class="controls">
       <div class="box"><label>הכנס פונקציה רציונלית</label><textarea id="funcInput">(3x^2 + 1)/(6x^2 - 4)</textarea><div class="hint">אפשר לכתוב למשל: <b>(2x^3+5)/(4x^2-1)</b> או <b>(5x^2-3)/(2x^2+7)</b>. היישומון מזהה את החזקה הגבוהה ואת המקדם שלה.</div><div id="err" class="error"></div><button onclick="parseAndUpdate()">נתח פונקציה</button><button class="secondary" onclick="randomFunction()">הגרל פונקציה</button></div>
-      <div class="box"><label>עריכה ידנית של המשחק</label><label>חזקה גבוהה במונה</label><input id="numDeg" type="number" value="2" min="0" /><label style="margin-top:10px">מקדם מוביל במונה</label><input id="numCoef" type="number" value="3" step="0.1" /><label style="margin-top:10px">חזקה גבוהה במכנה</label><input id="denDeg" type="number" value="2" min="0" /><label style="margin-top:10px">מקדם מוביל במכנה</label><input id="denCoef" type="number" value="6" step="0.1" /></div>
+      <div class="box rule-box">
+        <input id="numDeg" type="hidden" value="2" />
+        <input id="numCoef" type="hidden" value="3" />
+        <input id="denDeg" type="hidden" value="2" />
+        <input id="denCoef" type="hidden" value="6" />
+        <h2>כללי המשחק</h2>
+        <div class="rule-card"><strong>מונה עם חזקה גבוהה יותר</strong><span>מצב מסי → אין אסימפטוטה אופקית</span></div>
+        <div class="rule-card"><strong>מכנה עם חזקה גבוהה יותר</strong><span>מצב רונאלדו → y = 0</span></div>
+        <div class="rule-card"><strong>שוויון חזקות</strong><span>מצב ניימאר → VAR של מקדמים</span></div>
+      </div>
     </div>
     <div class="stadium" id="scene">
       <div class="midline"></div><div class="circle"></div><div class="goal left"></div><div class="goal right"></div><div class="scoreboard" id="scoreboard">מונה 2 : 2 מכנה</div>
@@ -149,7 +163,7 @@
       </div><div class="ball">⚽</div>
       <div class="celebration messi">☝️☝️<span class="caption">מצב מסי: המונה חוגג לשמיים</span></div>
       <div class="celebration ronaldo">Siuuu!<span class="caption">מצב רונאלדו: המכנה מנצח בגדול</span></div>
-      <div class="celebration neymar">🤸‍♂️💫<span class="caption">מצב ניימאר: גליץ׳ והולכים ל־VAR של מקדמים</span></div>
+      <div class="celebration neymar">🤸‍♂️<span class="caption">מצב ניימאר: גליץ׳ והולכים ל־VAR של מקדמים</span></div>
       <div class="case-title" id="caseTitle">שוויון דרגות → פנדלים של מקדמים</div>
     </div>
     <div class="result"><div class="explain"><h2>מה המשחק אומר?</h2><div class="note" id="explanation"></div></div><div class="formula"><h2>האסימפטוטה האופקית</h2><div class="asym" id="answer"></div></div></div>
@@ -166,7 +180,7 @@ function splitFraction(input){let s=clean(input);if(s.startsWith('(')){let depth
 function parseAndUpdate(){try{err.textContent='';const[n,d]=splitFraction(funcInput.value);const nl=leading(n),dl=leading(d);numDeg.value=nl.deg;denDeg.value=dl.deg;numCoef.value=nl.coef;denCoef.value=dl.coef;numView.textContent=pretty(n);denView.textContent=pretty(d);update()}catch(e){err.textContent=e.message}}
 function update(){const nd=+numDeg.value,dd=+denDeg.value,nc=+numCoef.value,dc=+denCoef.value;scoreboard.textContent=`מונה ${nd} : ${dd} מכנה`;scene.className='stadium';let text='',ans='';if(nd>dd){scene.classList.add('sky');caseTitle.textContent='מצב מסי ☝️☝️ → אין אסימפטוטה אופקית';text=`מצב מסי: המונה חוגג לשמיים. החזקה הגבוהה במונה היא ${nd}, ובמכנה ${dd}. לכן כש־x גדל, המונה משתלט על המשחק והפונקציה לא מתייצבת על גובה קבוע. אין אסימפטוטה אופקית.`;ans='אין'}else if(nd<dd){scene.classList.add('ground');caseTitle.textContent='מצב רונאלדו 🦵⚽ → y = 0';text=`מצב רונאלדו: המכנה מנצח בנחיתה חזקה. החזקה הגבוהה במכנה היא ${dd}, ובמונה ${nd}. ככל ש־x גדל, המכנה נהיה גדול הרבה יותר, ולכן כל השבר מתקרב לאפס.`;ans='y = 0'}else{scene.classList.add('equal');caseTitle.textContent='מצב ניימאר 🤸 → גליץ׳ ו־VAR של מקדמים';const val=dc===0?'לא מוגדר':+(nc/dc).toFixed(3);text=`מצב ניימאר: יש תיקו בדרגות, אז עושים גליץ׳ והולכים ל־VAR של המקדמים. בשני הצדדים החזקה הגבוהה היא ${nd}, ולכן בודקים את היחס בין המקדם המוביל במונה למקדם המוביל במכנה: ${nc}/${dc}.`;ans=dc===0?'לא מוגדר':`y = ${val}`}explanation.textContent=text;answer.textContent=ans}
 function loadExample(s){funcInput.value=s;parseAndUpdate()}function randomFunction(){const cases=['ground','equal','sky'];const c=cases[Math.floor(Math.random()*cases.length)];let nd,dd;if(c==='ground'){nd=Math.floor(Math.random()*3);dd=nd+1+Math.floor(Math.random()*3)}else if(c==='sky'){dd=Math.floor(Math.random()*3);nd=dd+1+Math.floor(Math.random()*3)}else{nd=dd=1+Math.floor(Math.random()*4)}const nc=1+Math.floor(Math.random()*8),dc=1+Math.floor(Math.random()*8);const n=`${nc}x^${nd}+${Math.floor(Math.random()*9)+1}`;const d=`${dc}x^${dd}-${Math.floor(Math.random()*9)+1}`;loadExample(`(${n})/(${d})`)}
-[numDeg,denDeg,numCoef,denCoef].forEach(el=>el.addEventListener('input',update));parseAndUpdate();
+parseAndUpdate();
 </script>
 </body>
 </html>
