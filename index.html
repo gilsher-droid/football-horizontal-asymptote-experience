@@ -366,13 +366,104 @@ button.secondary{background:linear-gradient(135deg,var(--fm-pink),var(--fm-orang
   .ground .ball{left:86%;top:174px}
   .equal .ball{top:262px}
 }
+
+/* Fundamatics brand refresh */
+:root{
+  --fm-brand-blue:#0B4DA2;
+  --fm-brand-blue-dark:#073878;
+  --fm-brand-cream:#FFFBE7;
+  --fm-brand-gold:#FFE972;
+  --fm-brand-violet:#7247E8;
+  --fm-brand-ink:#102033;
+}
+body{
+  background:
+    radial-gradient(720px 360px at 8% 0%,rgba(255,233,114,.42),transparent 62%),
+    linear-gradient(180deg,var(--fm-brand-cream),#f5f8ff);
+  color:var(--fm-brand-ink);
+  padding:28px 20px 40px;
+}
+.wrap{width:min(1180px,100%)}
+header{
+  min-height:170px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:28px;
+  align-items:center;
+  text-align:right;
+  margin:0 0 20px;
+  padding:28px 34px;
+  border-radius:30px;
+  background:
+    radial-gradient(420px 220px at 4% 10%,rgba(255,233,114,.2),transparent 64%),
+    linear-gradient(125deg,var(--fm-brand-blue),var(--fm-brand-blue-dark));
+  box-shadow:0 22px 54px rgba(7,56,120,.22);
+}
+header::before{display:none}
+header h1{font-size:40px;line-height:1.14;margin:6px 0 10px}
+header p{max-width:620px;font-size:18px;line-height:1.55}
+.hero-kicker{display:inline-block;color:var(--fm-brand-gold);font-size:14px;font-weight:900;letter-spacing:.04em}
+.brand-lockup{direction:ltr;display:flex;align-items:center;gap:14px;min-width:280px}
+.brand-lockup img{width:64px;height:64px;object-fit:cover;border-radius:18px;border:2px solid rgba(255,255,255,.72)}
+.brand-lockup strong{display:block;color:#fff;font-size:22px;letter-spacing:.12em}
+.brand-lockup span{display:block;margin-top:4px;color:var(--fm-brand-gold);font-size:17px;font-style:italic}
+.panel{background:rgba(255,255,255,.78);border:1px solid rgba(11,77,162,.12);box-shadow:0 22px 60px rgba(16,32,51,.14)}
+.function-box{background:linear-gradient(135deg,#fff,var(--fm-brand-cream));box-shadow:none;border:1px solid rgba(11,77,162,.12)}
+.line{background:linear-gradient(90deg,var(--fm-brand-violet),var(--fm-brand-gold),var(--fm-brand-blue))}
+.poly.highlight{background:rgba(255,233,114,.45);box-shadow:0 0 0 3px rgba(255,233,114,.38)}
+.learning-layout{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:16px;margin-bottom:18px;align-items:stretch}
+.learning-layout .controls{display:block;margin:0}
+.learning-layout .box{height:100%}
+.box{border:1px solid rgba(11,77,162,.13);box-shadow:0 10px 26px rgba(16,32,51,.06)}
+.rule-box h2,.explain h2,.formula h2{color:var(--fm-brand-blue)}
+.rule-card{background:transparent;border:0;border-top:1px solid rgba(11,77,162,.13);border-radius:0;padding:12px 0;margin:0}
+.rule-card:first-of-type{border-top:0}
+textarea{border:1px solid rgba(11,77,162,.28);background:#fff}
+textarea:focus{outline:3px solid rgba(114,71,232,.25);border-color:var(--fm-brand-violet)}
+button{background:linear-gradient(135deg,var(--fm-brand-blue),var(--fm-brand-blue-dark));box-shadow:0 9px 20px rgba(11,77,162,.2)}
+button.secondary{background:var(--fm-brand-gold);color:var(--fm-brand-ink)}
+button:focus-visible{outline:3px solid var(--fm-brand-gold);outline-offset:3px}
+.mode-banner{background:var(--fm-brand-cream);border:1px solid rgba(11,77,162,.14);box-shadow:none}
+.mode-main{color:var(--fm-brand-blue)}
+.stadium{border-color:#fff;box-shadow:0 16px 36px rgba(16,32,51,.12)}
+.var-screen{box-shadow:0 0 0 4px rgba(11,77,162,.3),0 0 24px rgba(77,157,255,.5),0 14px 26px rgba(0,0,0,.22)}
+.result{grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr)}
+.explain,.formula{border:1px solid rgba(11,77,162,.14);box-shadow:0 8px 22px rgba(16,32,51,.05)}
+.asym{color:var(--fm-brand-blue)}
+@media(max-width:850px){
+  body{padding:14px 10px 28px}
+  header{min-height:0;grid-template-columns:1fr;padding:22px 20px;border-radius:24px;gap:20px}
+  header h1{font-size:30px}
+  header p{padding:0}
+  .brand-lockup{min-width:0}
+  .brand-lockup img{width:54px;height:54px;border-radius:15px}
+  .brand-lockup strong{font-size:18px}
+  .learning-layout,.result{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+  header{padding:18px 16px;border-radius:20px}
+  header h1{font-size:26px}
+  .brand-lockup strong{font-size:16px;letter-spacing:.08em}
+  .brand-lockup span{font-size:15px}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>כדורגל לאסימפטוטה אופקית</h1>
-    <p>מונה מול מכנה: מי מנצח? ואם יש תיקו — הולכים ל־VAR של המקדמים.</p>
+    <div class="hero-copy">
+      <div class="hero-kicker">למידה דרך משחק</div>
+      <h1>כדורגל לאסימפטוטה אופקית</h1>
+      <p>מי שולט במשחק — המונה או המכנה? משווים דרגות ומגלים לאן הפונקציה מתקרבת.</p>
+    </div>
+    <div class="brand-lockup" aria-label="Fundamatics — Maths for life">
+      <img src="./assets/logo.jpeg" alt="" />
+      <div>
+        <strong>FUNDAMATICS</strong>
+        <span>Maths for life</span>
+      </div>
+    </div>
   </header>
   <div class="panel">
     <div class="function-box">
@@ -383,6 +474,7 @@ button.secondary{background:linear-gradient(135deg,var(--fm-pink),var(--fm-orang
         <div class="poly" id="denView">6x² - 4</div>
       </div>
     </div>
+    <div class="learning-layout">
           <div class="box rule-box">
         <input id="numDeg" type="hidden" value="2" />
         <input id="numCoef" type="hidden" value="3" />
@@ -404,6 +496,7 @@ button.secondary{background:linear-gradient(135deg,var(--fm-pink),var(--fm-orang
           <button class="secondary" onclick="randomFunction()">הגרל פונקציה</button>
         </div>
       </div>
+    </div>
     </div>
     <div class="mode-banner">
       <div class="mode-main" id="modeTitle">מצב ניימאר 🤸</div>
