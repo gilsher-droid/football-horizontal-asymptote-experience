@@ -1402,6 +1402,13 @@ function pretty(s){
     .replace(/\*/g,"");
 }
 
+function normalizeInput(poly){
+  return clean(poly)
+    .replace(/x\^0(?![0-9])/g,"")
+    .replace(/x\^1(?![0-9])/g,"x")
+    .replace(/\*/g,"");
+}
+
 function leading(poly){
   let p=clean(poly);
   if(!p) throw new Error(i18n.t("error.missing"));
@@ -1476,14 +1483,17 @@ function parseAndUpdate(){
   try{
     err.textContent="";
     const [n,d]=splitFraction(funcInput.value);
-    const nl=leading(n);
-    const dl=leading(d);
+    const normalizedN=normalizeInput(n);
+    const normalizedD=normalizeInput(d);
+    const nl=leading(normalizedN);
+    const dl=leading(normalizedD);
     numDeg.value=nl.deg;
     denDeg.value=dl.deg;
     numCoef.value=nl.coef;
     denCoef.value=dl.coef;
-    numView.textContent=pretty(n);
-    denView.textContent=pretty(d);
+    numView.textContent=pretty(normalizedN);
+    denView.textContent=pretty(normalizedD);
+    funcInput.value="("+normalizedN+")/("+normalizedD+")";
     update();
   }catch(e){
     err.textContent=e.message;
@@ -1552,8 +1562,8 @@ function randomFunction(){
   const dc=1+Math.floor(Math.random()*8);
   const nTail=Math.floor(Math.random()*9)+1;
   const dTail=Math.floor(Math.random()*9)+1;
-  const n=nd===0 ? String(nc+nTail) : nc+"x^"+nd+"+"+nTail;
-  const d=dd===0 ? String(dc+dTail) : dc+"x^"+dd+"-"+dTail;
+  const n=nd===0 ? String(nc+nTail) : nd===1 ? nc+"x+"+nTail : nc+"x^"+nd+"+"+nTail;
+  const d=dd===0 ? String(dc+dTail) : dd===1 ? dc+"x-"+dTail : dc+"x^"+dd+"-"+dTail;
   loadExample(`(${n})/(${d})`);
 }
 
