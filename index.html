@@ -1019,6 +1019,14 @@ button.secondary:hover:not(:disabled){
   .stadium{height:350px}
 }
 
+/* Geometry theme short-screen card fit */
+@media(min-width:921px) and (max-height:850px){
+  .learning-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .learning-layout .box{height:100%}
+  .controls{min-width:0}
+  .controls .box{height:100%}
+}
+
 </style>
 </head>
 <body>
