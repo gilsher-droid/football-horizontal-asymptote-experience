@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>כדורגל לאסימפטוטה אופקית</title>
+<title>אסימפטוטה אופקית בכדורגל | Fundamatics</title>
+<meta name="description" content="יישומון אינטראקטיבי ללימוד אסימפטוטה אופקית באמצעות משחק כדורגל." />
 <style>
 :root{
   --fm-blue:#4D9DFF;
@@ -447,6 +448,265 @@ button:focus-visible{outline:3px solid var(--fm-brand-gold);outline-offset:3px}
   .brand-lockup span{font-size:15px}
 }
 
+/* Linear-function visual system */
+:root{
+  --navy:#06283d;
+  --navy-light:#0c4a6e;
+  --blue:#0284c7;
+  --sky:#e0f2fe;
+  --gold:#facc15;
+  --yellow-line:#fff7ae;
+  --white:#fff;
+  --ink:#0f172a;
+  --muted:#475569;
+  --panel:#fff;
+  --border:#dbe4ec;
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#eaf4f8 0%,#f8fafc 55%,#eef4f7 100%);
+}
+.wrap{width:100%;margin:0}
+header{
+  width:100%;
+  min-height:0;
+  margin:0;
+  padding:12px max(18px,calc((100vw - 1200px)/2));
+  display:grid;
+  grid-template-columns:320px minmax(0,1fr);
+  align-items:center;
+  gap:40px;
+  direction:ltr;
+  border-radius:0;
+  color:var(--white);
+  background:
+    radial-gradient(circle at top right,rgba(56,189,248,.22),transparent 35%),
+    linear-gradient(135deg,var(--navy),var(--navy-light));
+  box-shadow:0 8px 25px rgba(15,23,42,.18);
+}
+.hero-copy{
+  grid-column:2;
+  direction:rtl;
+  text-align:right;
+  justify-self:end;
+}
+header h1{
+  margin:0;
+  color:#fff;
+  font-size:clamp(24px,2.4vw,32px);
+  font-weight:700;
+  line-height:1.2;
+}
+header p{
+  max-width:700px;
+  margin:6px 0 0;
+  padding:0;
+  color:rgba(255,255,255,.92);
+  font-size:15px;
+  line-height:1.45;
+}
+.hero-kicker{
+  margin-bottom:5px;
+  color:#bae6fd;
+  font-size:13px;
+  letter-spacing:0;
+}
+.brand-lockup{
+  grid-column:1;
+  grid-row:1;
+  min-width:0;
+  justify-self:start;
+  direction:ltr;
+  gap:12px;
+}
+.brand-lockup img{
+  width:56px;
+  height:56px;
+  border:2px solid rgba(255,255,255,.72);
+  border-radius:14px;
+  box-shadow:0 4px 14px rgba(0,0,0,.2);
+}
+.brand-lockup strong{font-size:20px;letter-spacing:.1em}
+.brand-lockup span{margin-top:2px;color:#bae6fd;font-size:15px}
+.panel{
+  width:min(1240px,96%);
+  margin:20px auto;
+  padding:0;
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(300px,1fr);
+  gap:20px;
+  align-items:start;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+}
+.function-box,.box,.mode-banner,.explain,.formula{
+  background:var(--panel);
+  border:1px solid rgba(148,163,184,.25);
+  border-radius:20px;
+  box-shadow:0 14px 35px rgba(15,23,42,.09),0 2px 8px rgba(15,23,42,.04);
+}
+.function-box{
+  grid-column:2;
+  grid-row:1;
+  margin:0;
+  padding:18px;
+  background:#fff;
+}
+.function-title{font-size:18px}
+.fraction{font-size:clamp(26px,3vw,34px)}
+.line{height:5px;background:var(--yellow-line)}
+.poly.highlight{
+  background:#fef3c7;
+  box-shadow:0 0 0 2px #fcd34d;
+}
+.learning-layout{
+  grid-column:2;
+  grid-row:2;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  margin:0;
+}
+.learning-layout .box{height:auto}
+.learning-layout .controls{display:block;margin:0}
+.box{padding:15px}
+.rule-box h2,.explain h2,.formula h2{
+  margin:0 0 9px;
+  color:var(--ink);
+  font-size:18px;
+}
+.rule-card{
+  margin:0;
+  padding:11px 0;
+  background:transparent;
+  border:0;
+  border-top:1px solid var(--border);
+  border-radius:0;
+}
+.rule-card:first-of-type{border-top:0}
+.rule-card span,.hint{color:var(--muted)}
+textarea{
+  height:96px;
+  border:1px solid #cbd5e1;
+  border-radius:13px;
+  background:#fff;
+}
+textarea:focus{
+  outline:3px solid rgba(2,132,199,.18);
+  border-color:var(--blue);
+}
+.buttons{gap:10px}
+button{
+  border-radius:13px;
+  padding:12px;
+  color:#172554;
+  background:linear-gradient(135deg,#fde047,#f59e0b);
+  box-shadow:none;
+}
+button.secondary{
+  color:#172554;
+  background:#dbeafe;
+}
+button:hover{filter:brightness(.98);transform:translateY(-1px)}
+button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.mode-banner{
+  grid-column:1;
+  grid-row:1;
+  margin:0;
+  padding:14px 18px;
+  background:#ecfeff;
+  border-color:#a5f3fc;
+  box-shadow:none;
+}
+.mode-main{color:#164e63;font-size:22px}
+.mode-sub{color:var(--muted);font-size:15px}
+.stadium{
+  grid-column:1;
+  grid-row:2;
+  height:clamp(430px,48vw,590px);
+  margin:0;
+  border:4px solid rgba(255,255,255,.8);
+  border-radius:18px;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 48px,rgba(0,0,0,.035) 48px 96px),
+    linear-gradient(180deg,#0c7a42,#169c55);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.22),0 12px 25px rgba(15,23,42,.18);
+}
+.stadium::before{border-radius:12px}
+.scoreboard{
+  background:rgba(6,40,61,.94);
+  border-radius:13px;
+}
+.var-screen{
+  background:linear-gradient(135deg,var(--navy),var(--navy-light));
+  box-shadow:0 0 0 4px rgba(2,132,199,.28),0 0 24px rgba(56,189,248,.42),0 14px 26px rgba(0,0,0,.22);
+}
+.result{
+  grid-column:1/-1;
+  grid-row:3;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  gap:12px;
+}
+.explain,.formula{padding:18px}
+.formula{border-right:6px solid var(--blue)}
+.note{color:var(--muted);font-size:16px;line-height:1.55}
+.asym{
+  margin-top:22px;
+  color:var(--navy-light);
+  font-size:clamp(30px,4vw,40px);
+}
+.site-footer{
+  padding:16px;
+  color:var(--muted);
+  text-align:center;
+  font-size:14px;
+}
+@media(max-width:920px){
+  header{
+    grid-template-columns:250px minmax(0,1fr);
+    gap:24px;
+  }
+  .panel{grid-template-columns:1fr}
+  .mode-banner{grid-column:1;grid-row:1}
+  .stadium{grid-column:1;grid-row:2;height:clamp(380px,70vw,540px)}
+  .function-box{grid-column:1;grid-row:3}
+  .learning-layout{grid-column:1;grid-row:4}
+  .result{grid-column:1;grid-row:5}
+}
+@media(max-width:650px){
+  header{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding:14px 13px;
+    text-align:center;
+  }
+  .brand-lockup{
+    order:-1;
+    justify-self:auto;
+    align-self:center;
+  }
+  .brand-lockup img{width:50px;height:50px}
+  .hero-copy{text-align:center}
+  header h1{font-size:24px}
+  header p{font-size:14px}
+  .panel{width:96%;margin-top:14px;gap:12px}
+  .stadium{height:360px}
+  .result{grid-template-columns:1fr}
+}
+@media(max-width:430px){
+  .brand-lockup strong{font-size:17px}
+  .brand-lockup span{font-size:14px}
+  .stadium{height:330px}
+}
+
 </style>
 </head>
 <body>
@@ -550,6 +810,7 @@ button:focus-visible{outline:3px solid var(--fm-brand-gold);outline-offset:3px}
     </div>
   </div>
 </div>
+<footer class="site-footer">Fundamatics — Maths for life</footer>
 <script>
 const numDeg=document.getElementById("numDeg");
 const denDeg=document.getElementById("denDeg");
