@@ -1092,6 +1092,194 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
   .language-option{padding:5px 8px;font-size:.7rem}
 }
 
+/* Player experience upgrade */
+.player{
+  transform-origin:50% 88%;
+  filter:drop-shadow(0 10px 8px rgba(5,35,28,.22));
+  will-change:transform;
+}
+.player::before{
+  position:absolute;
+  left:50%;top:-8px;
+  transform:translateX(-50%);
+  z-index:11;
+  padding:3px 8px;
+  border-radius:999px;
+  background:rgba(8,34,69,.82);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.72);
+  font:800 10px/1 "Montserrat",Arial,sans-serif;
+  letter-spacing:.05em;
+  white-space:nowrap;
+  box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+#messiPlayer::before{content:"MESSI · 10"}
+#ronaldoPlayer::before{content:"RONALDO · 7"}
+#neymarPlayer::before{content:"NEYMAR · 10"}
+.head{
+  border:2px solid rgba(107,63,35,.22);
+  box-shadow:inset 0 -5px 0 rgba(214,142,94,.14),0 3px 0 rgba(0,0,0,.08);
+}
+.head::before{
+  content:"";
+  position:absolute;
+  left:4px;right:4px;top:-3px;
+  height:18px;
+  border-radius:50% 50% 38% 38%;
+  background:#2a1b18;
+}
+.head::after{
+  content:"";
+  position:absolute;
+  left:13px;top:26px;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:#32241f;
+  box-shadow:18px 0 #32241f,9px 11px 0 -1px #bd6c62;
+}
+#ronaldoPlayer .head::before{
+  left:5px;right:3px;top:-5px;height:20px;
+  border-radius:60% 35% 42% 30%;
+  background:linear-gradient(145deg,#17120f 30%,#3c2d25);
+  transform:skewX(-8deg);
+}
+#neymarPlayer .head::before{
+  left:7px;right:2px;top:-7px;height:22px;
+  border-radius:72% 28% 48% 34%;
+  background:linear-gradient(135deg,#f0d46d,#7b542a 70%);
+  transform:rotate(-7deg);
+}
+.body{
+  border-radius:20px 20px 11px 11px;
+  border:2px solid rgba(255,255,255,.36);
+  box-shadow:inset 0 -12px 0 rgba(0,0,0,.12),0 5px 0 rgba(0,0,0,.12);
+}
+.body::before{
+  content:"";
+  position:absolute;
+  left:50%;top:-2px;
+  width:20px;height:10px;
+  transform:translateX(-50%);
+  border-radius:0 0 10px 10px;
+  background:rgba(255,255,255,.72);
+}
+.body::after{
+  position:absolute;
+  inset:25px 0 auto;
+  color:#fff;
+  text-align:center;
+  font:900 28px/1 "Montserrat",Arial,sans-serif;
+  text-shadow:0 2px 0 rgba(0,0,0,.3);
+}
+.body-messi::after{content:"10"}
+.body-ronaldo{
+  background:linear-gradient(135deg,#f8fbff 0 67%,#dfe8f2 68%);
+  border-color:#fff;
+}
+.body-ronaldo::before{background:#0b4da2}
+.body-ronaldo::after{content:"7";color:#0b4da2;text-shadow:none}
+.body-neymar{
+  background:linear-gradient(135deg,#f8d447 0 70%,#2e9a57 71%);
+  border-color:#ffe988;
+}
+.body-neymar::before{background:#2e9a57}
+.body-neymar::after{content:"10";color:#175d35}
+.arm{border:1px solid rgba(117,70,42,.14);box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.leg{transform-origin:50% 4px;background:#152131}
+.leg::after{
+  content:"";
+  position:absolute;
+  left:-2px;bottom:-3px;
+  width:24px;height:11px;
+  border-radius:9px 12px 5px 5px;
+  background:#111827;
+  box-shadow:0 3px 0 rgba(0,0,0,.16);
+}
+#neymarPlayer::after{
+  content:"";
+  position:absolute;
+  left:-54px;top:92px;
+  width:88px;height:18px;
+  border-radius:50%;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,0) 0 8px,rgba(255,244,193,.88) 9px 18px);
+  filter:blur(1px);
+  opacity:0;
+  transform:skewX(-24deg);
+}
+.stadium::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .35s ease;
+  background:radial-gradient(circle at 50% 77%,rgba(255,238,141,.36),transparent 28%);
+}
+.stadium.sky::after{opacity:.65;background:radial-gradient(circle at 22% 70%,rgba(255,238,141,.4),transparent 26%)}
+.stadium.ground::after{opacity:.65;background:radial-gradient(circle at 78% 70%,rgba(255,238,141,.4),transparent 26%)}
+.stadium.equal::after{opacity:1}
+@keyframes messi-rise{
+  0%{transform:translateY(0) scale(1)}
+  38%{transform:translateY(-32px) scale(1.1) rotate(-2deg)}
+  65%{transform:translateY(-20px) scale(1.1) rotate(2deg)}
+  100%{transform:translateY(-24px) scale(1.1)}
+}
+@keyframes ronaldo-celebrate{
+  0%{transform:translateY(0) scale(1) rotate(0)}
+  38%{transform:translateY(-30px) scale(1.08) rotate(4deg)}
+  68%{transform:translateY(-10px) scale(1.12) rotate(-4deg)}
+  100%{transform:translateY(-16px) scale(1.1) rotate(0)}
+}
+@keyframes neymar-slide{
+  0%{transform:translateX(-180%) translateY(-2px) rotate(12deg) scale(.72);opacity:.25}
+  42%{transform:translateX(-76%) translateY(2px) rotate(48deg) scale(.8);opacity:1}
+  72%{transform:translateX(-46%) translateY(13px) rotate(88deg) scale(.86)}
+  86%{transform:translateX(-52%) translateY(9px) rotate(78deg) scale(.84)}
+  100%{transform:translateX(-50%) translateY(11px) rotate(82deg) scale(.84)}
+}
+@keyframes messi-ball{
+  0%{transform:translate(-50%,-50%) rotate(0)}
+  55%{transform:translate(-50%,-92%) rotate(-240deg)}
+  100%{transform:translate(-50%,-50%) rotate(-360deg)}
+}
+@keyframes ronaldo-ball{
+  0%{transform:translate(-50%,-50%) rotate(0)}
+  50%{transform:translate(-50%,-72%) rotate(250deg)}
+  100%{transform:translate(-50%,-50%) rotate(360deg)}
+}
+@keyframes slide-ball{
+  0%{transform:translate(-180px,-50%) rotate(0)}
+  62%{transform:translate(-18px,-50%) rotate(310deg)}
+  100%{transform:translate(-50%,-50%) rotate(420deg)}
+}
+.sky #messiPlayer{animation:messi-rise .95s cubic-bezier(.2,.9,.2,1) both}
+.ground #ronaldoPlayer{animation:ronaldo-celebrate 1s cubic-bezier(.2,.9,.2,1) both}
+.equal #neymarPlayer{bottom:28px;animation:neymar-slide 1.08s cubic-bezier(.16,.84,.3,1) both;z-index:9}
+.sky .ball{animation:messi-ball .9s cubic-bezier(.2,.8,.2,1) both}
+.ground .ball{animation:ronaldo-ball .92s cubic-bezier(.2,.8,.2,1) both}
+.equal .ball{animation:slide-ball 1.05s cubic-bezier(.2,.8,.2,1) both}
+.equal #neymarPlayer::before{opacity:0}
+.equal #neymarPlayer::after{opacity:1}
+.equal #neymarPlayer .arm.left{transform:rotate(-72deg) translateY(8px)!important}
+.equal #neymarPlayer .arm.right{transform:rotate(62deg) translateY(4px)!important}
+.equal #neymarPlayer .leg.left{transform:rotate(58deg) translateY(-2px)}
+.equal #neymarPlayer .leg.right{transform:rotate(-46deg) translateY(2px)}
+.sky #messiPlayer .leg.left{transform:rotate(14deg)}
+.sky #messiPlayer .leg.right{transform:rotate(-18deg)}
+.ground #ronaldoPlayer .leg.left{transform:rotate(18deg)}
+.ground #ronaldoPlayer .leg.right{transform:rotate(-18deg)}
+@media(max-width:850px){
+  .player::before{top:-6px;padding:2px 5px;font-size:7px}
+  .body::after{inset:17px 0 auto;font-size:18px}
+  .head::after{left:8px;top:17px;width:4px;height:4px;box-shadow:12px 0 #32241f,6px 7px 0 -1px #bd6c62}
+  .leg::after{width:16px;height:8px}
+  .equal #neymarPlayer{bottom:22px}
+}
+@media(prefers-reduced-motion:reduce){
+  .player,.ball,.celebration{animation:none!important;transition:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -1581,6 +1769,7 @@ function update(){
   scoreboard.textContent=i18n.t("scoreboard",{nd,dd});
   scene.className="stadium";
   resetPlayerPoses();
+  void scene.offsetWidth;
   let text="";
   let ans="";
   if(nd>dd){
