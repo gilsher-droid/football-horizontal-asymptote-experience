@@ -1395,7 +1395,11 @@ function clean(s){
 }
 
 function pretty(s){
-  return s.replace(/\^([0-9]+)/g,(m,n)=>toSup(n)).replace(/\*/g,"");
+  return s
+    .replace(/x\^0(?![0-9])/g,"")
+    .replace(/x\^1(?![0-9])/g,"x")
+    .replace(/\^([0-9]+)/g,(m,n)=>toSup(n))
+    .replace(/\*/g,"");
 }
 
 function leading(poly){
@@ -1404,8 +1408,7 @@ function leading(poly){
   p=p.replace(/-/g,"+-");
   if(p[0]==="+") p=p.slice(1);
   const terms=p.split("+").filter(Boolean);
-  let bestDeg=-1;
-  let bestCoef=0;
+  const coefficientsByDegree=new Map();
   for(const t of terms){
     let deg=0;
     let coef=0;
@@ -1421,12 +1424,14 @@ function leading(poly){
       deg=0;
     }
     if(Number.isNaN(coef)) throw new Error(i18n.t("error.term",{term:t}));
-    if(deg>bestDeg){
-      bestDeg=deg;
-      bestCoef=coef;
-    }
+    coefficientsByDegree.set(deg,(coefficientsByDegree.get(deg)||0)+coef);
   }
-  return {deg:bestDeg,coef:bestCoef};
+  const degrees=[...coefficientsByDegree.keys()]
+    .filter(deg=>Math.abs(coefficientsByDegree.get(deg))>1e-12)
+    .sort((a,b)=>b-a);
+  if(!degrees.length) return {deg:0,coef:0};
+  const bestDeg=degrees[0];
+  return {deg:bestDeg,coef:coefficientsByDegree.get(bestDeg)};
 }
 
 function splitFraction(input){
@@ -1545,8 +1550,10 @@ function randomFunction(){
   }
   const nc=1+Math.floor(Math.random()*8);
   const dc=1+Math.floor(Math.random()*8);
-  const n=`${nc}x^${nd}+${Math.floor(Math.random()*9)+1}`;
-  const d=`${dc}x^${dd}-${Math.floor(Math.random()*9)+1}`;
+  const nTail=Math.floor(Math.random()*9)+1;
+  const dTail=Math.floor(Math.random()*9)+1;
+  const n=nd===0 ? String(nc+nTail) : nc+"x^"+nd+"+"+nTail;
+  const d=dd===0 ? String(dc+dTail) : dc+"x^"+dd+"-"+dTail;
   loadExample(`(${n})/(${d})`);
 }
 
