@@ -1041,6 +1041,12 @@ button.secondary:hover:not(:disabled){
   .site-footer{padding:3px;line-height:1.2}
 }
 
+/* Geometry theme overflow guard */
+@media(min-width:921px) and (max-height:850px){
+  .wrap{margin-top:0}
+  .learning-layout .buttons button{min-width:0}
+}
+
 </style>
 </head>
 <body>
