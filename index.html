@@ -76,7 +76,11 @@ header p{margin:0;font-size:18px;line-height:1.45;opacity:.95}
 }
 .line{height:4px;border-radius:4px;background:linear-gradient(90deg,var(--fm-pink),var(--fm-yellow),var(--fm-blue))}
 .poly{padding:2px 12px;border-radius:14px;transition:.25s ease;overflow-wrap:anywhere}
-.poly.highlight{background:rgba(255,211,90,.32);box-shadow:0 0 0 3px rgba(255,211,90,.38)}
+.poly.highlight{background:transparent;box-shadow:none}
+.math-focus{display:inline-block;padding:0 .1em;border-radius:.28em;line-height:1.08}
+.degree-focus{background:rgba(255,211,90,.58);box-shadow:0 0 0 2px rgba(255,189,46,.65);color:#5f3b00}
+.coefficient-focus{background:rgba(127,92,255,.20);box-shadow:0 0 0 2px rgba(127,92,255,.42);color:#4322a8}
+.focus-badge{font-size:.46em;font-weight:800;margin-inline-start:.6em;padding:.22em .48em;vertical-align:middle;white-space:nowrap}
 .controls{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:18px}
 .box{
   background:white;
@@ -1275,6 +1279,8 @@ const i18nMessages={
     "explanation.sky":"החזקה הגבוהה במונה היא {nd}, ובמכנה {dd}. לכן המונה משתלט על המשחק, והפונקציה לא מתייצבת על גובה קבוע.",
     "explanation.ground":"החזקה הגבוהה במכנה היא {dd}, ובמונה {nd}. לכן המכנה שולט במשחק, והשבר מתקרב לאפס.",
     "explanation.equal":"יש שוויון בדרגות: בשני הצדדים החזקה הגבוהה היא {nd}. לכן הולכים ל־VAR של המקדמים ובודקים את היחס {nc}/{dc}.",
+    "focus.degree":"חזקה {value}",
+    "focus.coefficient":"מקדם {value}",
     "answer.none":"אין אסימפטוטה אופקית",
     "answer.undefined":"לא מוגדר",
     "error.missing":"חסר ביטוי",
@@ -1319,6 +1325,8 @@ const i18nMessages={
     "explanation.sky":"The highest degree is {nd} in the numerator and {dd} in the denominator. The numerator controls the match, so the function does not settle at a constant height.",
     "explanation.ground":"The highest degree is {dd} in the denominator and {nd} in the numerator. The denominator controls the match, so the fraction approaches zero.",
     "explanation.equal":"The degrees are equal: both sides have highest degree {nd}. We go to coefficient VAR and check the ratio {nc}/{dc}.",
+    "focus.degree":"power {value}",
+    "focus.coefficient":"coefficient {value}",
     "answer.none":"No horizontal asymptote",
     "answer.undefined":"Undefined",
     "error.missing":"An expression is missing",
@@ -1463,15 +1471,80 @@ function splitFraction(input){
   return parts;
 }
 
-function setHighlight(mode){
-  numView.classList.remove("highlight");
-  denView.classList.remove("highlight");
-  if(mode==="sky") numView.classList.add("highlight");
-  if(mode==="ground") denView.classList.add("highlight");
-  if(mode==="equal"){
-    numView.classList.add("highlight");
-    denView.classList.add("highlight");
+function appendFocus(parent,text,type,extraClass=""){
+  const span=document.createElement("span");
+  span.className="math-focus "+type+"-focus "+extraClass;
+  span.textContent=text;
+  parent.appendChild(span);
+}
+
+function termDegree(term){
+  if(!term.includes("x")) return 0;
+  const power=term.match(/x\^(-?\d+)/);
+  return power ? Number(power[1]) : 1;
+}
+
+function appendDegreeTerm(parent,sign,body,degree,isLeading){
+  if(sign) parent.appendChild(document.createTextNode(sign));
+  const formatted=pretty(body);
+  if(!isLeading || degree===0){
+    parent.appendChild(document.createTextNode(formatted));
+    return;
   }
+  const target=degree===1 ? "x" : toSup(degree);
+  const index=formatted.indexOf(target);
+  if(index<0){
+    parent.appendChild(document.createTextNode(formatted));
+    return;
+  }
+  parent.appendChild(document.createTextNode(formatted.slice(0,index)));
+  appendFocus(parent,target,"degree");
+  parent.appendChild(document.createTextNode(formatted.slice(index+target.length)));
+}
+
+function renderPolynomialFocus(element,poly,info,focus){
+  element.replaceChildren();
+  const terms=clean(poly).replace(/\*/g,"").match(/[+-]?[^+-]+/g)||[];
+  let visibleCoefficient=false;
+  terms.forEach(term=>{
+    const sign=/^[+-]/.test(term) ? term[0] : "";
+    const body=sign ? term.slice(1) : term;
+    const degree=termDegree(body);
+    const isLeading=degree===info.deg;
+    if(focus==="coefficient" && isLeading){
+      if(sign) element.appendChild(document.createTextNode(sign));
+      if(degree===0){
+        appendFocus(element,pretty(body),"coefficient");
+        visibleCoefficient=true;
+        return;
+      }
+      const xIndex=body.indexOf("x");
+      const coefficient=body.slice(0,xIndex).replace("*","");
+      if(coefficient){
+        appendFocus(element,coefficient,"coefficient");
+        element.appendChild(document.createTextNode(pretty(body.slice(xIndex))));
+        visibleCoefficient=true;
+      }else{
+        element.appendChild(document.createTextNode(pretty(body)));
+      }
+      return;
+    }
+    appendDegreeTerm(element,sign,body,degree,focus==="degree" && isLeading);
+  });
+  if(focus==="degree" && info.deg===0){
+    appendFocus(element,i18n.t("focus.degree",{value:info.deg}),"degree","focus-badge");
+    element.lastElementChild.setAttribute("dir","auto");
+  }
+  if(focus==="coefficient" && !visibleCoefficient){
+    appendFocus(element,i18n.t("focus.coefficient",{value:info.coef}),"coefficient","focus-badge");
+    element.lastElementChild.setAttribute("dir","auto");
+  }
+}
+
+function renderComparison(focus){
+  const [n,d]=splitFraction(funcInput.value);
+  renderPolynomialFocus(numView,normalizeInput(n),{deg:+numDeg.value,coef:+numCoef.value},focus);
+  renderPolynomialFocus(denView,normalizeInput(d),{deg:+denDeg.value,coef:+denCoef.value},focus);
 }
 
 function resetPlayerPoses(){
@@ -1513,7 +1586,7 @@ function update(){
   if(nd>dd){
     scene.classList.add("sky");
     messiPlayer.classList.add("pose-up");
-    setHighlight("sky");
+    renderComparison("degree");
     modeTitle.textContent=i18n.t("mode.sky.title");
     modeSubtitle.textContent=i18n.t("mode.sky.subtitle");
     text=i18n.t("explanation.sky",{nd,dd});
@@ -1521,14 +1594,14 @@ function update(){
   }else if(nd<dd){
     scene.classList.add("ground");
     ronaldoPlayer.classList.add("pose-down");
-    setHighlight("ground");
+    renderComparison("degree");
     modeTitle.textContent=i18n.t("mode.ground.title");
     modeSubtitle.textContent=i18n.t("mode.ground.subtitle");
     text=i18n.t("explanation.ground",{nd,dd});
     ans="y = 0";
   }else{
     scene.classList.add("equal");
-    setHighlight("equal");
+    renderComparison("coefficient");
     const val=dc===0 ? i18n.t("answer.undefined") : +(nc/dc).toFixed(3);
     modeTitle.textContent=i18n.t("mode.equal.title");
     modeSubtitle.textContent=i18n.t("mode.equal.subtitle");
