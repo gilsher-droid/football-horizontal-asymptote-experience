@@ -1047,6 +1047,47 @@ button.secondary:hover:not(:disabled){
   .learning-layout .buttons button{min-width:0}
 }
 
+/* Fundamatics bilingual controls */
+html[lang="en"] body{font-family:"Montserrat","Manrope",Arial,sans-serif}
+.language-switcher{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:4px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:var(--surface);
+}
+.language-option{
+  width:auto;
+  min-width:0;
+  padding:7px 11px;
+  border:0;
+  border-radius:999px;
+  color:var(--primary);
+  background:transparent;
+  font-size:.82rem;
+  box-shadow:none;
+}
+.language-option:hover:not(:disabled){
+  color:var(--primary);
+  background:var(--surface-soft);
+  transform:none;
+}
+.language-option.is-active,.language-option.is-active:hover:not(:disabled){
+  color:#fff;
+  background:var(--primary);
+}
+html[dir="ltr"] .product-identity{direction:ltr;text-align:left}
+html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px solid var(--brand-purple)}
+@media(max-width:850px){
+  .language-switcher{align-self:flex-start}
+}
+@media(min-width:921px) and (max-height:850px){
+  .language-switcher{padding:3px}
+  .language-option{padding:5px 8px;font-size:.7rem}
+}
+
 </style>
 </head>
 <body>
@@ -1065,6 +1106,10 @@ button.secondary:hover:not(:disabled){
       </div>
     </div>
     <div class="header-actions">
+      <div class="language-switcher" role="group" aria-label="בחירת שפה">
+        <button class="language-option" type="button" data-locale="he" lang="he">עברית</button>
+        <button class="language-option" type="button" data-locale="en" lang="en">English</button>
+      </div>
       <a class="fundamatics-home-link" href="https://fundamatics.com/">חזרה ל־Fundamatics</a>
     </div>
   </header>
@@ -1155,6 +1200,172 @@ button.secondary:hover:not(:disabled){
 </div>
 <footer class="site-footer">Fundamatics — Maths for life</footer>
 <script>
+
+class I18n {
+  constructor({defaultLocale="he",storageKey="football-asymptote.locale",messages={}}={}){
+    this.defaultLocale=defaultLocale;
+    this.storageKey=storageKey;
+    this.messages=messages;
+    this.supportedLocales=Object.keys(messages);
+    this.locale=this.getStoredLocale();
+    this.applyDocumentLanguage();
+  }
+  getStoredLocale(){
+    try{
+      const storedLocale=window.localStorage.getItem(this.storageKey);
+      if(this.supportedLocales.includes(storedLocale)) return storedLocale;
+    }catch(error){}
+    return this.defaultLocale;
+  }
+  setLocale(locale){
+    if(!this.supportedLocales.includes(locale)||locale===this.locale) return;
+    this.locale=locale;
+    try{window.localStorage.setItem(this.storageKey,locale);}catch(error){}
+    this.applyDocumentLanguage();
+    window.dispatchEvent(new CustomEvent("footballasymptote:localechange",{detail:{locale}}));
+  }
+  applyDocumentLanguage(){
+    document.documentElement.lang=this.locale;
+    document.documentElement.dir=this.locale==="he"?"rtl":"ltr";
+  }
+  t(key,replacements={}){
+    const localeMessages=this.messages[this.locale]||{};
+    const fallbackMessages=this.messages[this.defaultLocale]||{};
+    const template=localeMessages[key]??fallbackMessages[key]??key;
+    return Object.entries(replacements).reduce((result,[replacementKey,value])=>result.replaceAll("{"+replacementKey+"}",String(value)),template);
+  }
+}
+
+const i18nMessages={
+  he:{
+    "document.title":"אסימפטוטה אופקית בכדורגל | Fundamatics",
+    "document.description":"יישומון אינטראקטיבי ללימוד אסימפטוטה אופקית באמצעות משחק כדורגל.",
+    "header.aria":"אסימפטוטה אופקית בכדורגל מבית Fundamatics",
+    "header.kicker":"למידה דרך משחק",
+    "header.title":"אסימפטוטה אופקית בכדורגל",
+    "header.subtitle":"מי שולט במשחק — המונה או המכנה? משווים דרגות ומגלים לאן הפונקציה מתקרבת.",
+    "header.home":"חזרה ל־Fundamatics",
+    "language.label":"בחירת שפה",
+    "language.he":"עברית",
+    "language.en":"English",
+    "function.title":"הפונקציה הרציונלית",
+    "rules.title":"כללי המשחק",
+    "rules.sky.title":"מונה עם חזקה גבוהה יותר",
+    "rules.sky.text":"מצב מסי → אין אסימפטוטה אופקית",
+    "rules.ground.title":"מכנה עם חזקה גבוהה יותר",
+    "rules.ground.text":"מצב רונאלדו → y = 0",
+    "rules.equal.title":"שוויון חזקות",
+    "rules.equal.text":"מצב ניימאר → גליץ׳ ו־VAR של מקדמים",
+    "input.label":"הכנס פונקציה רציונלית",
+    "input.hint":"אפשר לכתוב למשל: <b>(2x^3+5)/(4x^2-1)</b> או <b>(5x^2-3)/(2x^2+7)</b>. היישומון מזהה את החזקה הגבוהה ואת המקדם שלה.",
+    "button.analyze":"נתח פונקציה",
+    "button.random":"הגרל פונקציה",
+    "mode.sky.title":"מצב מסי ☝️☝️",
+    "mode.sky.subtitle":"המונה מנצח → אין אסימפטוטה אופקית",
+    "mode.ground.title":"מצב רונאלדו ⚽",
+    "mode.ground.subtitle":"המכנה מנצח → y = 0",
+    "mode.equal.title":"מצב ניימאר 🤸",
+    "mode.equal.subtitle":"גליץ׳ → הולכים ל־VAR של מקדמים",
+    "scoreboard":"מונה {nd} : {dd} מכנה",
+    "var.title":"VAR",
+    "var.subtitle":"בדיקת מקדמים",
+    "result.explanation":"מה המשחק אומר?",
+    "result.asymptote":"האסימפטוטה האופקית",
+    "explanation.sky":"החזקה הגבוהה במונה היא {nd}, ובמכנה {dd}. לכן המונה משתלט על המשחק, והפונקציה לא מתייצבת על גובה קבוע.",
+    "explanation.ground":"החזקה הגבוהה במכנה היא {dd}, ובמונה {nd}. לכן המכנה שולט במשחק, והשבר מתקרב לאפס.",
+    "explanation.equal":"יש שוויון בדרגות: בשני הצדדים החזקה הגבוהה היא {nd}. לכן הולכים ל־VAR של המקדמים ובודקים את היחס {nc}/{dc}.",
+    "answer.none":"אין אסימפטוטה אופקית",
+    "answer.undefined":"לא מוגדר",
+    "error.missing":"חסר ביטוי",
+    "error.term":"לא הצלחתי לקרוא את אחד האיברים: {term}",
+    "error.fraction":"כתוב פונקציה בצורה מונה/מכנה, למשל (3x^2+1)/(6x^2-4)"
+  },
+  en:{
+    "document.title":"Horizontal Asymptotes in Football | Fundamatics",
+    "document.description":"An interactive football experience for learning horizontal asymptotes.",
+    "header.aria":"Horizontal Asymptotes in Football by Fundamatics",
+    "header.kicker":"Learning through play",
+    "header.title":"Horizontal Asymptotes in Football",
+    "header.subtitle":"Who controls the match — the numerator or the denominator? Compare degrees and discover where the function is heading.",
+    "header.home":"Back to Fundamatics",
+    "language.label":"Choose language",
+    "language.he":"עברית",
+    "language.en":"English",
+    "function.title":"The rational function",
+    "rules.title":"Match rules",
+    "rules.sky.title":"The numerator has the higher degree",
+    "rules.sky.text":"Messi mode → no horizontal asymptote",
+    "rules.ground.title":"The denominator has the higher degree",
+    "rules.ground.text":"Ronaldo mode → y = 0",
+    "rules.equal.title":"Equal degrees",
+    "rules.equal.text":"Neymar mode → slide into coefficient VAR",
+    "input.label":"Enter a rational function",
+    "input.hint":"Try: <b>(2x^3+5)/(4x^2-1)</b> or <b>(5x^2-3)/(2x^2+7)</b>. The app detects the highest exponent and its coefficient.",
+    "button.analyze":"Analyze function",
+    "button.random":"Random function",
+    "mode.sky.title":"Messi mode ☝️☝️",
+    "mode.sky.subtitle":"The numerator wins → no horizontal asymptote",
+    "mode.ground.title":"Ronaldo mode ⚽",
+    "mode.ground.subtitle":"The denominator wins → y = 0",
+    "mode.equal.title":"Neymar mode 🤸",
+    "mode.equal.subtitle":"Slide → check the coefficients with VAR",
+    "scoreboard":"Numerator {nd} : {dd} Denominator",
+    "var.title":"VAR",
+    "var.subtitle":"Coefficient check",
+    "result.explanation":"What does the match tell us?",
+    "result.asymptote":"The horizontal asymptote",
+    "explanation.sky":"The highest degree is {nd} in the numerator and {dd} in the denominator. The numerator controls the match, so the function does not settle at a constant height.",
+    "explanation.ground":"The highest degree is {dd} in the denominator and {nd} in the numerator. The denominator controls the match, so the fraction approaches zero.",
+    "explanation.equal":"The degrees are equal: both sides have highest degree {nd}. We go to coefficient VAR and check the ratio {nc}/{dc}.",
+    "answer.none":"No horizontal asymptote",
+    "answer.undefined":"Undefined",
+    "error.missing":"An expression is missing",
+    "error.term":"I could not read this term: {term}",
+    "error.fraction":"Write the function as numerator/denominator, for example (3x^2+1)/(6x^2-4)"
+  }
+};
+
+const i18n=new I18n({defaultLocale:"he",storageKey:"football-asymptote.locale",messages:i18nMessages});
+
+function translateStaticUi(){
+  document.title=i18n.t("document.title");
+  const metaDescription=document.querySelector('meta[name="description"]');
+  if(metaDescription) metaDescription.setAttribute("content",i18n.t("document.description"));
+  const appHeader=document.querySelector(".app-header");
+  if(appHeader) appHeader.setAttribute("aria-label",i18n.t("header.aria"));
+  document.querySelector(".product-kicker").textContent=i18n.t("header.kicker");
+  document.querySelector(".product-identity h1").textContent=i18n.t("header.title");
+  document.querySelector(".product-identity p").textContent=i18n.t("header.subtitle");
+  document.querySelector(".fundamatics-home-link").textContent=i18n.t("header.home");
+  const languageSwitcher=document.querySelector(".language-switcher");
+  languageSwitcher.setAttribute("aria-label",i18n.t("language.label"));
+  document.querySelector('[data-locale="he"]').textContent=i18n.t("language.he");
+  document.querySelector('[data-locale="en"]').textContent=i18n.t("language.en");
+  document.querySelector(".function-title").textContent=i18n.t("function.title");
+  document.querySelector(".rule-box h2").textContent=i18n.t("rules.title");
+  const ruleCards=document.querySelectorAll(".rule-card");
+  const ruleKeys=["sky","ground","equal"];
+  ruleCards.forEach((card,index)=>{
+    const key=ruleKeys[index];
+    card.querySelector("strong").textContent=i18n.t("rules."+key+".title");
+    card.querySelector("span").textContent=i18n.t("rules."+key+".text");
+  });
+  document.querySelector(".controls label").textContent=i18n.t("input.label");
+  document.querySelector(".hint").innerHTML=i18n.t("input.hint");
+  const actionButtons=document.querySelectorAll(".buttons button");
+  actionButtons[0].textContent=i18n.t("button.analyze");
+  actionButtons[1].textContent=i18n.t("button.random");
+  document.querySelector(".var-screen strong").textContent=i18n.t("var.title");
+  document.querySelector(".var-screen span").textContent=i18n.t("var.subtitle");
+  document.querySelector(".explain h2").textContent=i18n.t("result.explanation");
+  document.querySelector(".formula h2").textContent=i18n.t("result.asymptote");
+  document.querySelectorAll(".language-option").forEach(button=>{
+    const isActive=button.dataset.locale===i18n.locale;
+    button.classList.toggle("is-active",isActive);
+    button.setAttribute("aria-pressed",String(isActive));
+  });
+}
+
 const numDeg=document.getElementById("numDeg");
 const denDeg=document.getElementById("denDeg");
 const numCoef=document.getElementById("numCoef");
@@ -1186,7 +1397,7 @@ function pretty(s){
 
 function leading(poly){
   let p=clean(poly);
-  if(!p) throw new Error("חסר ביטוי");
+  if(!p) throw new Error(i18n.t("error.missing"));
   p=p.replace(/-/g,"+-");
   if(p[0]==="+") p=p.slice(1);
   const terms=p.split("+").filter(Boolean);
@@ -1206,7 +1417,7 @@ function leading(poly){
       coef=Number(t);
       deg=0;
     }
-    if(Number.isNaN(coef)) throw new Error("לא הצלחתי לקרוא את אחד האיברים: "+t);
+    if(Number.isNaN(coef)) throw new Error(i18n.t("error.term",{term:t}));
     if(deg>bestDeg){
       bestDeg=deg;
       bestCoef=coef;
@@ -1233,7 +1444,7 @@ function splitFraction(input){
     }
   }
   const parts=s.split("/");
-  if(parts.length!==2) throw new Error("כתוב פונקציה בצורה מונה/מכנה, למשל (3x^2+1)/(6x^2-4)");
+  if(parts.length!==2) throw new Error(i18n.t("error.fraction"));
   return parts;
 }
 
@@ -1276,7 +1487,7 @@ function update(){
   const dd=+denDeg.value;
   const nc=+numCoef.value;
   const dc=+denCoef.value;
-  scoreboard.textContent=`מונה ${nd} : ${dd} מכנה`;
+  scoreboard.textContent=i18n.t("scoreboard",{nd,dd});
   scene.className="stadium";
   resetPlayerPoses();
   let text="";
@@ -1285,26 +1496,26 @@ function update(){
     scene.classList.add("sky");
     messiPlayer.classList.add("pose-up");
     setHighlight("sky");
-    modeTitle.textContent="מצב מסי ☝️☝️";
-    modeSubtitle.textContent="המונה מנצח → אין אסימפטוטה אופקית";
-    text=`החזקה הגבוהה במונה היא ${nd}, ובמכנה ${dd}. לכן המונה משתלט על המשחק, והפונקציה לא מתייצבת על גובה קבוע.`;
-    ans="אין אסימפטוטה אופקית";
+    modeTitle.textContent=i18n.t("mode.sky.title");
+    modeSubtitle.textContent=i18n.t("mode.sky.subtitle");
+    text=i18n.t("explanation.sky",{nd,dd});
+    ans=i18n.t("answer.none");
   }else if(nd<dd){
     scene.classList.add("ground");
     ronaldoPlayer.classList.add("pose-down");
     setHighlight("ground");
-    modeTitle.textContent="מצב רונאלדו ⚽";
-    modeSubtitle.textContent="המכנה מנצח → y = 0";
-    text=`החזקה הגבוהה במכנה היא ${dd}, ובמונה ${nd}. לכן המכנה שולט במשחק, והשבר מתקרב לאפס.`;
+    modeTitle.textContent=i18n.t("mode.ground.title");
+    modeSubtitle.textContent=i18n.t("mode.ground.subtitle");
+    text=i18n.t("explanation.ground",{nd,dd});
     ans="y = 0";
   }else{
     scene.classList.add("equal");
     setHighlight("equal");
-    const val=dc===0 ? "לא מוגדר" : +(nc/dc).toFixed(3);
-    modeTitle.textContent="מצב ניימאר 🤸";
-    modeSubtitle.textContent="גליץ׳ → הולכים ל־VAR של מקדמים";
-    text=`יש שוויון בדרגות: בשני הצדדים החזקה הגבוהה היא ${nd}. לכן הולכים ל־VAR של המקדמים ובודקים את היחס ${nc}/${dc}.`;
-    ans=dc===0 ? "לא מוגדר" : `y = ${val}`;
+    const val=dc===0 ? i18n.t("answer.undefined") : +(nc/dc).toFixed(3);
+    modeTitle.textContent=i18n.t("mode.equal.title");
+    modeSubtitle.textContent=i18n.t("mode.equal.subtitle");
+    text=i18n.t("explanation.equal",{nd,nc,dc});
+    ans=dc===0 ? i18n.t("answer.undefined") : `y = ${val}`;
   }
   explanation.textContent=text;
   answer.textContent=ans;
@@ -1336,6 +1547,15 @@ function randomFunction(){
   loadExample(`(${n})/(${d})`);
 }
 
+
+document.querySelectorAll(".language-option").forEach(button=>{
+  button.addEventListener("click",()=>i18n.setLocale(button.dataset.locale));
+});
+window.addEventListener("footballasymptote:localechange",()=>{
+  translateStaticUi();
+  update();
+});
+translateStaticUi();
 parseAndUpdate();
 </script>
 </body>
