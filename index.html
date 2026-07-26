@@ -1293,6 +1293,14 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
   .equal .ball{top:258px;font-size:31px}
 }
 
+/* Messi final pose: both arms toward the sky */
+.sky #messiPlayer .arm.left,#messiPlayer.pose-up .arm.left{
+  transform:rotate(-172deg) translateY(-4px)!important;
+}
+.sky #messiPlayer .arm.right,#messiPlayer.pose-up .arm.right{
+  transform:rotate(172deg) translateY(-4px)!important;
+}
+
 </style>
 </head>
 <body>
@@ -1387,7 +1395,6 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
         <div class="leg right"></div>
       </div>
       <div class="ball">⚽</div>
-      <div class="celebration celebration-messi">☝️☝️</div>
       <div class="celebration celebration-ronaldo">סססססיייייי</div>
       <div class="celebration celebration-neymar">🤸‍♂️</div>
     </div>
@@ -1465,7 +1472,7 @@ const i18nMessages={
     "input.hint":"אפשר לכתוב למשל: <b>(2x^3+5)/(4x^2-1)</b> או <b>(5x^2-3)/(2x^2+7)</b>. היישומון מזהה את החזקה הגבוהה ואת המקדם שלה.",
     "button.analyze":"נתח פונקציה",
     "button.random":"הגרל פונקציה",
-    "mode.sky.title":"מצב מסי ☝️☝️",
+    "mode.sky.title":"מצב מסי",
     "mode.sky.subtitle":"המונה מנצח → אין אסימפטוטה אופקית",
     "mode.ground.title":"מצב רונאלדו ⚽",
     "mode.ground.subtitle":"המכנה מנצח → y = 0",
@@ -1511,7 +1518,7 @@ const i18nMessages={
     "input.hint":"Try: <b>(2x^3+5)/(4x^2-1)</b> or <b>(5x^2-3)/(2x^2+7)</b>. The app detects the highest exponent and its coefficient.",
     "button.analyze":"Analyze function",
     "button.random":"Random function",
-    "mode.sky.title":"Messi mode ☝️☝️",
+    "mode.sky.title":"Messi mode",
     "mode.sky.subtitle":"The numerator wins → no horizontal asymptote",
     "mode.ground.title":"Ronaldo mode ⚽",
     "mode.ground.subtitle":"The denominator wins → y = 0",
