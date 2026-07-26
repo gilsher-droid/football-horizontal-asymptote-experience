@@ -1280,6 +1280,19 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
   .player,.ball,.celebration{animation:none!important;transition:none!important}
 }
 
+/* Player animation polish */
+.ground #ronaldoPlayer::before{opacity:0}
+.celebration-ronaldo{right:56px;top:68px;font-size:42px;text-shadow:0 3px 0 rgba(0,0,0,.18)}
+.equal .celebration-neymar{opacity:0}
+.equal .ball{left:44%;top:310px;z-index:10;font-size:48px}
+@media(max-width:850px){
+  .celebration-ronaldo{right:8px;top:68px;font-size:27px}
+  .equal .ball{left:42%;top:282px;font-size:34px}
+}
+@media(max-width:420px){
+  .equal .ball{top:258px;font-size:31px}
+}
+
 </style>
 </head>
 <body>
