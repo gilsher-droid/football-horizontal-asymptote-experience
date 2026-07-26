@@ -1269,6 +1269,7 @@ const i18nMessages={
     "scoreboard":"מונה {nd} : {dd} מכנה",
     "var.title":"VAR",
     "var.subtitle":"בדיקת מקדמים",
+    "celebration.ronaldo":"סססססיייייי",
     "result.explanation":"מה המשחק אומר?",
     "result.asymptote":"האסימפטוטה האופקית",
     "explanation.sky":"החזקה הגבוהה במונה היא {nd}, ובמכנה {dd}. לכן המונה משתלט על המשחק, והפונקציה לא מתייצבת על גובה קבוע.",
@@ -1312,6 +1313,7 @@ const i18nMessages={
     "scoreboard":"Numerator {nd} : {dd} Denominator",
     "var.title":"VAR",
     "var.subtitle":"Coefficient check",
+    "celebration.ronaldo":"Siuuuuu!",
     "result.explanation":"What does the match tell us?",
     "result.asymptote":"The horizontal asymptote",
     "explanation.sky":"The highest degree is {nd} in the numerator and {dd} in the denominator. The numerator controls the match, so the function does not settle at a constant height.",
@@ -1357,6 +1359,7 @@ function translateStaticUi(){
   actionButtons[1].textContent=i18n.t("button.random");
   document.querySelector(".var-screen strong").textContent=i18n.t("var.title");
   document.querySelector(".var-screen span").textContent=i18n.t("var.subtitle");
+  document.querySelector(".celebration-ronaldo").textContent=i18n.t("celebration.ronaldo");
   document.querySelector(".explain h2").textContent=i18n.t("result.explanation");
   document.querySelector(".formula h2").textContent=i18n.t("result.asymptote");
   document.querySelectorAll(".language-option").forEach(button=>{
