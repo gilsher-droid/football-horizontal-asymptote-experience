@@ -1301,6 +1301,157 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
   transform:rotate(172deg) translateY(-4px)!important;
 }
 
+/* Messi and Ronaldo cinematic mode sequences */
+#messiPlayer::after,#ronaldoPlayer::after{
+  content:"";
+  position:absolute;
+  top:78px;
+  width:74px;height:32px;
+  z-index:-1;
+  border-radius:50%;
+  opacity:0;
+  filter:blur(1px);
+  background:repeating-linear-gradient(0deg,transparent 0 7px,rgba(255,255,255,.72) 8px 11px);
+}
+#messiPlayer::after{right:78px;transform:skewX(-18deg)}
+#ronaldoPlayer::after{left:78px;transform:skewX(18deg)}
+@keyframes messi-story{
+  0%{transform:translate(18px,0) scale(.98) rotate(0)}
+  22%{transform:translate(-8px,-2px) scale(1.01) rotate(-4deg)}
+  42%{transform:translate(7px,-7px) scale(1.04) rotate(5deg)}
+  60%{transform:translate(-4px,-15px) scale(1.08) rotate(-7deg)}
+  76%{transform:translateY(-36px) scale(1.12) rotate(2deg)}
+  88%{transform:translateY(-20px) scale(1.1) rotate(-1deg)}
+  100%{transform:translateY(-24px) scale(1.1) rotate(0)}
+}
+@keyframes messi-left-arm-story{
+  0%,34%{transform:rotate(14deg)}
+  48%{transform:rotate(-34deg)}
+  62%{transform:rotate(70deg)}
+  78%{transform:rotate(-158deg) translateY(-2px)}
+  100%{transform:rotate(-172deg) translateY(-4px)}
+}
+@keyframes messi-right-arm-story{
+  0%,34%{transform:rotate(-14deg)}
+  48%{transform:rotate(34deg)}
+  62%{transform:rotate(-70deg)}
+  78%{transform:rotate(158deg) translateY(-2px)}
+  100%{transform:rotate(172deg) translateY(-4px)}
+}
+@keyframes messi-left-leg-story{
+  0%,30%{transform:rotate(-10deg)}
+  44%{transform:rotate(22deg)}
+  58%{transform:rotate(-58deg) translateY(-3px)}
+  74%{transform:rotate(18deg)}
+  100%{transform:rotate(14deg)}
+}
+@keyframes messi-right-leg-story{
+  0%,30%{transform:rotate(12deg)}
+  44%{transform:rotate(-18deg)}
+  58%{transform:rotate(24deg)}
+  74%{transform:rotate(-20deg)}
+  100%{transform:rotate(-18deg)}
+}
+@keyframes messi-ball-story{
+  0%{left:46%;top:292px;transform:translate(-50%,-50%) rotate(0)}
+  24%{left:34%;top:304px;transform:translate(-50%,-50%) rotate(-100deg)}
+  46%{left:27%;top:292px;transform:translate(-50%,-50%) rotate(-190deg)}
+  60%{left:23%;top:270px;transform:translate(-50%,-50%) rotate(-245deg)}
+  76%{left:15%;top:218px;transform:translate(-50%,-50%) rotate(-330deg)}
+  100%{left:9%;top:208px;transform:translate(-50%,-50%) rotate(-420deg)}
+}
+@keyframes ronaldo-story{
+  0%{transform:translate(-20px,0) scale(.98) rotate(0)}
+  24%{transform:translate(8px,-4px) scale(1.02) rotate(4deg)}
+  44%{transform:translate(-5px,-18px) scale(1.07) rotate(-8deg)}
+  60%{transform:translateY(-46px) scale(1.1) rotate(11deg)}
+  72%{transform:translateY(-50px) scale(1.12) rotate(-8deg)}
+  86%{transform:translateY(-9px) scale(1.13) rotate(3deg)}
+  100%{transform:translateY(-16px) scale(1.1) rotate(0)}
+}
+@keyframes ronaldo-left-arm-story{
+  0%,30%{transform:rotate(-18deg)}
+  54%{transform:rotate(-148deg) translateY(-5px)}
+  70%{transform:rotate(-120deg)}
+  86%{transform:rotate(74deg) translateY(15px)}
+  100%{transform:rotate(58deg) translateY(20px)}
+}
+@keyframes ronaldo-right-arm-story{
+  0%,30%{transform:rotate(18deg)}
+  54%{transform:rotate(148deg) translateY(-5px)}
+  70%{transform:rotate(120deg)}
+  86%{transform:rotate(-74deg) translateY(15px)}
+  100%{transform:rotate(-58deg) translateY(20px)}
+}
+@keyframes ronaldo-left-leg-story{
+  0%,34%{transform:rotate(10deg)}
+  58%{transform:rotate(-44deg) translateY(-5px)}
+  72%{transform:rotate(30deg)}
+  88%,100%{transform:rotate(18deg)}
+}
+@keyframes ronaldo-right-leg-story{
+  0%,34%{transform:rotate(-10deg)}
+  58%{transform:rotate(44deg) translateY(-5px)}
+  72%{transform:rotate(-30deg)}
+  88%,100%{transform:rotate(-18deg)}
+}
+@keyframes ronaldo-ball-story{
+  0%{left:54%;top:292px;transform:translate(-50%,-50%) rotate(0)}
+  24%{left:66%;top:304px;transform:translate(-50%,-50%) rotate(110deg)}
+  46%{left:73%;top:292px;transform:translate(-50%,-50%) rotate(200deg)}
+  60%{left:77%;top:270px;transform:translate(-50%,-50%) rotate(260deg)}
+  76%{left:85%;top:218px;transform:translate(-50%,-50%) rotate(345deg)}
+  100%{left:91%;top:208px;transform:translate(-50%,-50%) rotate(430deg)}
+}
+@keyframes player-speed-lines{
+  0%,12%,78%,100%{opacity:0;transform:translateX(0) skewX(var(--trail-skew,0deg))}
+  28%,60%{opacity:.82;transform:translateX(var(--trail-shift,0)) skewX(var(--trail-skew,0deg))}
+}
+@keyframes goal-flash{
+  0%,58%{background:rgba(255,255,255,.18);box-shadow:none}
+  76%{background:rgba(255,233,114,.72);box-shadow:0 0 28px rgba(255,233,114,.95)}
+  100%{background:rgba(255,255,255,.24);box-shadow:0 0 12px rgba(255,255,255,.35)}
+}
+@keyframes siuuu-reveal{
+  0%,62%{opacity:0;transform:translateY(8px) scale(.55)}
+  78%{opacity:1;transform:translateY(-10px) scale(1.12)}
+  100%{opacity:1;transform:translateY(-8px) scale(1)}
+}
+.sky #messiPlayer{animation:messi-story 1.55s cubic-bezier(.2,.78,.24,1) both}
+.sky #messiPlayer .arm.left{animation:messi-left-arm-story 1.55s ease-in-out both}
+.sky #messiPlayer .arm.right{animation:messi-right-arm-story 1.55s ease-in-out both}
+.sky #messiPlayer .leg.left{animation:messi-left-leg-story 1.55s ease-in-out both}
+.sky #messiPlayer .leg.right{animation:messi-right-leg-story 1.55s ease-in-out both}
+.sky #messiPlayer::after{--trail-skew:-18deg;--trail-shift:-12px;animation:player-speed-lines 1.55s ease both}
+.sky .ball{animation:messi-ball-story 1.55s cubic-bezier(.24,.76,.24,1) both}
+.sky .goal.left{animation:goal-flash 1.55s ease both}
+.ground #ronaldoPlayer{animation:ronaldo-story 1.6s cubic-bezier(.2,.78,.24,1) both}
+.ground #ronaldoPlayer .arm.left{animation:ronaldo-left-arm-story 1.6s ease-in-out both}
+.ground #ronaldoPlayer .arm.right{animation:ronaldo-right-arm-story 1.6s ease-in-out both}
+.ground #ronaldoPlayer .leg.left{animation:ronaldo-left-leg-story 1.6s ease-in-out both}
+.ground #ronaldoPlayer .leg.right{animation:ronaldo-right-leg-story 1.6s ease-in-out both}
+.ground #ronaldoPlayer::after{--trail-skew:18deg;--trail-shift:12px;animation:player-speed-lines 1.6s ease both}
+.ground .ball{animation:ronaldo-ball-story 1.6s cubic-bezier(.24,.76,.24,1) both}
+.ground .goal.right{animation:goal-flash 1.6s ease both}
+.ground .celebration-ronaldo{animation:siuuu-reveal 1.6s ease both}
+@media(max-width:850px){
+  @keyframes messi-ball-story{
+    0%{left:46%;top:242px;transform:translate(-50%,-50%) rotate(0)}
+    46%{left:28%;top:248px;transform:translate(-50%,-50%) rotate(-190deg)}
+    76%{left:18%;top:194px;transform:translate(-50%,-50%) rotate(-330deg)}
+    100%{left:12%;top:185px;transform:translate(-50%,-50%) rotate(-420deg)}
+  }
+  @keyframes ronaldo-ball-story{
+    0%{left:54%;top:242px;transform:translate(-50%,-50%) rotate(0)}
+    46%{left:72%;top:248px;transform:translate(-50%,-50%) rotate(200deg)}
+    76%{left:82%;top:194px;transform:translate(-50%,-50%) rotate(345deg)}
+    100%{left:88%;top:185px;transform:translate(-50%,-50%) rotate(430deg)}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .arm,.leg,.goal,.player::after{animation:none!important}
+}
+
 </style>
 </head>
 <body>
