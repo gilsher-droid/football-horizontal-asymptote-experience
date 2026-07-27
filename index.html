@@ -1453,45 +1453,15 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
 }
 
 /* Five-second learning pause for implicit powers */
-.function-box{position:relative}
-.degree-learning-hint{
-  position:absolute;
-  inset-inline-end:18px;
-  top:calc(100% - 8px);
-  z-index:30;
-  width:min(360px,calc(100% - 36px));
-  padding:12px 14px;
-  border:2px solid #f4c84f;
-  border-radius:16px;
-  color:#19324d;
-  background:linear-gradient(135deg,#fffbe7,#fff4ba);
-  box-shadow:0 14px 30px rgba(16,32,51,.2);
-  font-size:13px;
-  font-weight:800;
-  line-height:1.5;
-  text-align:start;
-  animation:degree-hint-in .28s ease both;
-}
-.degree-learning-hint::before{
-  content:"";
-  position:absolute;
-  inset-inline-end:24px;
-  top:-9px;
-  width:15px;height:15px;
-  transform:rotate(45deg);
-  border-left:2px solid #f4c84f;
-  border-top:2px solid #f4c84f;
-  background:#fffbe7;
-}
+.mode-banner{position:relative}
+.mode-banner.is-learning{padding:9px 18px 10px;background:#fff8cf;border-color:#f1d55c}
+.mode-banner.is-learning .mode-sub{display:none}
+.degree-learning-hint{position:static;width:min(920px,100%);margin:6px auto 0;padding:7px 13px;border:1px solid #d9ae23;border-radius:11px;color:#3f3100;background:linear-gradient(135deg,#ffe36b,#ffd44d);box-shadow:none;font-size:12.5px;font-weight:800;line-height:1.35;text-align:center;animation:degree-hint-in .28s ease both}
+.degree-learning-hint::before{display:none}
 .degree-learning-hint[hidden]{display:none}
 .waiting-degree .scoreboard{background:linear-gradient(135deg,#6b4a13,#9a6b18)}
-@keyframes degree-hint-in{
-  from{opacity:0;transform:translateY(-6px) scale(.97)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-@media(max-width:850px){
-  .degree-learning-hint{inset-inline:10px;width:auto;top:calc(100% - 4px);font-size:12px;padding:10px 12px}
-}
+@keyframes degree-hint-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:850px){.mode-banner.is-learning{padding:8px 10px 9px}.degree-learning-hint{font-size:11.5px;padding:7px 9px;line-height:1.35}}
 
 </style>
 </head>
@@ -1526,7 +1496,6 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
         <div class="line"></div>
         <div class="poly" id="denView">6x² - 4</div>
       </div>
-      <div id="degreeLearningHint" class="degree-learning-hint" role="status" aria-live="polite" hidden></div>
     </div>
     <div class="learning-layout">
           <div class="box rule-box">
@@ -1555,6 +1524,7 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
     <div class="mode-banner">
       <div class="mode-main" id="modeTitle">מצב ניימאר 🤸</div>
       <div class="mode-sub" id="modeSubtitle">שוויון דרגות → גליץ׳ ו־VAR של מקדמים</div>
+      <div id="degreeLearningHint" class="degree-learning-hint" role="status" aria-live="polite" hidden></div>
     </div>
     <div class="stadium" id="scene">
       <div class="midline"></div>
@@ -1686,9 +1656,10 @@ const i18nMessages={
     "degree.pause.subtitle":"מגלים את החזקה הסמויה לפני שחושפים את התוצאה",
     "degree.pause.scoreboard":"בודקים חזקה סמויה…",
     "degree.pause.answer":"עוד רגע…",
-    "degree.pause.zero":"מספר קבוע כמו 7 אפשר לחשוב עליו כ־7·x⁰. לכן דרגתו 0, אבל בכתיבה המקובלת לא מציגים x⁰.",
-    "degree.pause.one":"האיבר x הוא למעשה x¹. לכן דרגתו 1, אבל בכתיבה המקובלת לא כותבים את החזקה 1.",
-    "degree.pause.both":"מספר קבוע כמו 7 הוא למעשה 7·x⁰, ולכן דרגתו 0. האיבר x הוא למעשה x¹, ולכן דרגתו 1. בכתיבה המקובלת משמיטים את שתי החזקות האלה.",
+    "degree.pause.side.numerator":"במונה",
+    "degree.pause.side.denominator":"במכנה",
+    "degree.pause.zero.detail":"{side}: המספר {coef} הוא למעשה {coef}·x⁰, ולכן דרגתו 0. בכתיבה המקובלת לא מציגים x⁰.",
+    "degree.pause.one.detail":"{side}: האיבר {term} הוא למעשה {coef}·x¹, ולכן דרגתו 1. בכתיבה המקובלת לא כותבים את החזקה 1.",
     "degree.pause.countdown":"מגלים את הדרגה בעוד {seconds} שניות…",
     "answer.none":"אין אסימפטוטה אופקית",
     "answer.undefined":"לא מוגדר",
@@ -1740,9 +1711,10 @@ const i18nMessages={
     "degree.pause.subtitle":"Discover the hidden exponent before revealing the result",
     "degree.pause.scoreboard":"Checking a hidden exponent…",
     "degree.pause.answer":"One moment…",
-    "degree.pause.zero":"A constant such as 7 can be viewed as 7·x⁰. Its degree is therefore 0, but standard notation does not display x⁰.",
-    "degree.pause.one":"The term x is really x¹. Its degree is therefore 1, but standard notation does not write the exponent 1.",
-    "degree.pause.both":"A constant such as 7 is 7·x⁰, so its degree is 0. The term x is x¹, so its degree is 1. Standard notation omits both of these exponents.",
+    "degree.pause.side.numerator":"In the numerator",
+    "degree.pause.side.denominator":"In the denominator",
+    "degree.pause.zero.detail":"{side}: the number {coef} is really {coef}·x⁰, so its degree is 0. Standard notation does not display x⁰.",
+    "degree.pause.one.detail":"{side}: the term {term} is really {coef}·x¹, so its degree is 1. Standard notation does not write exponent 1.",
     "degree.pause.countdown":"The degree will be revealed in {seconds} seconds…",
     "answer.none":"No horizontal asymptote",
     "answer.undefined":"Undefined",
@@ -1805,6 +1777,7 @@ const err=document.getElementById("err");
 const scoreboard=document.getElementById("scoreboard");
 const modeTitle=document.getElementById("modeTitle");
 const modeSubtitle=document.getElementById("modeSubtitle");
+const modeBanner=document.querySelector(".mode-banner");
 const numView=document.getElementById("numView");
 const denView=document.getElementById("denView");
 const funcInput=document.getElementById("funcInput");
@@ -1982,11 +1955,26 @@ function renderPlainComparison(){
   denView.textContent=pretty(normalizeInput(d));
 }
 
-function showDegreeLearningHint(degrees,seconds){
-  const hasZero=degrees.includes(0);
-  const hasOne=degrees.includes(1);
-  const key=hasZero&&hasOne ? "degree.pause.both" : hasZero ? "degree.pause.zero" : "degree.pause.one";
-  degreeLearningHint.textContent=i18n.t(key)+" "+i18n.t("degree.pause.countdown",{seconds});
+function formatDegreeNumber(value){
+  const number=Number(value);
+  return Number.isInteger(number) ? String(number) : String(+number.toFixed(3));
+}
+function implicitTerm(coef){
+  const value=formatDegreeNumber(coef);
+  if(Number(coef)===1) return "x";
+  if(Number(coef)===-1) return "−x";
+  return value+"x";
+}
+function degreeDetailMessage(detail){
+  const side=i18n.t("degree.pause.side."+detail.side);
+  const coef=formatDegreeNumber(detail.coef);
+  return detail.degree===0
+    ? i18n.t("degree.pause.zero.detail",{side,coef})
+    : i18n.t("degree.pause.one.detail",{side,coef,term:implicitTerm(detail.coef)});
+}
+function degreeLearningMessage(details){return details.map(degreeDetailMessage).join(" ")}
+function showDegreeLearningHint(details,seconds){
+  degreeLearningHint.textContent=degreeLearningMessage(details)+" "+i18n.t("degree.pause.countdown",{seconds});
   degreeLearningHint.hidden=false;
 }
 
@@ -1997,6 +1985,8 @@ function resetPlayerPoses(){
 
 function parseAndUpdate(){
   cancelDegreeReveal();
+  degreeLearningHint.hidden=true;
+  modeBanner.classList.remove("is-learning");
   try{
     err.textContent="";
     const [n,d]=splitFraction(funcInput.value);
@@ -2024,31 +2014,34 @@ function update(skipDegreeDelay=false){
   const dd=+denDeg.value;
   const nc=+numCoef.value;
   const dc=+denCoef.value;
-  const specialDegrees=[...new Set([nd,dd].filter(degree=>degree===0||degree===1))];
-  if(!skipDegreeDelay && specialDegrees.length){
+  const specialDegreeDetails=[
+    {side:"numerator",degree:nd,coef:nc},
+    {side:"denominator",degree:dd,coef:dc}
+  ].filter(detail=>detail.degree===0||detail.degree===1);
+  if(!skipDegreeDelay && specialDegreeDetails.length){
     renderPlainComparison();
     scene.className="stadium waiting-degree";
     resetPlayerPoses();
+    modeBanner.classList.add("is-learning");
     modeTitle.textContent=i18n.t("degree.pause.title");
     modeSubtitle.textContent=i18n.t("degree.pause.subtitle");
     scoreboard.textContent=i18n.t("degree.pause.scoreboard");
-    explanation.textContent=i18n.t(specialDegrees.includes(0)&&specialDegrees.includes(1) ? "degree.pause.both" : specialDegrees.includes(0) ? "degree.pause.zero" : "degree.pause.one");
+    explanation.textContent=degreeLearningMessage(specialDegreeDetails);
     answer.textContent=i18n.t("degree.pause.answer");
     let remaining=5;
-    showDegreeLearningHint(specialDegrees,remaining);
-    degreeCountdownTimer=setInterval(()=>{
-      remaining-=1;
-      if(remaining>0) showDegreeLearningHint(specialDegrees,remaining);
-    },1000);
+    showDegreeLearningHint(specialDegreeDetails,remaining);
+    degreeCountdownTimer=setInterval(()=>{remaining-=1;if(remaining>0)showDegreeLearningHint(specialDegreeDetails,remaining)},1000);
     degreeRevealTimer=setTimeout(()=>{
-      if(revealVersion!==degreeRevealVersion) return;
+      if(revealVersion!==degreeRevealVersion)return;
       cancelDegreeReveal();
       degreeLearningHint.hidden=true;
+      modeBanner.classList.remove("is-learning");
       update(true);
     },5000);
     return;
   }
   degreeLearningHint.hidden=true;
+  modeBanner.classList.remove("is-learning");
   scoreboard.textContent=i18n.t("scoreboard",{nd,dd});
   scene.className="stadium";
   resetPlayerPoses();
