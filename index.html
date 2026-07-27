@@ -250,11 +250,11 @@ button.secondary{background:linear-gradient(135deg,var(--fm-pink),var(--fm-orang
 .leg.left{left:38px}
 .leg.right{right:38px}
 .sky .player.left,.player.pose-up{transform:translateY(-8px) scale(1.08)}
-.sky .player.left .arm.left,.player.pose-up .arm.left{transform:rotate(-150deg) translateY(-34px) !important}
-.sky .player.left .arm.right,.player.pose-up .arm.right{transform:rotate(150deg) translateY(-34px) !important}
+.sky .player.left .arm.left,.player.pose-up .arm.left{transform:rotate(-150deg) translateY(-34px) }
+.sky .player.left .arm.right,.player.pose-up .arm.right{transform:rotate(150deg) translateY(-34px) }
 .ground .player.right,.player.pose-down{transform:translateY(-8px) scale(1.08)}
-.ground .player.right .arm.left,.player.pose-down .arm.left{transform:rotate(58deg) translateY(20px) !important}
-.ground .player.right .arm.right,.player.pose-down .arm.right{transform:rotate(-58deg) translateY(20px) !important}
+.ground .player.right .arm.left,.player.pose-down .arm.left{transform:rotate(58deg) translateY(20px) }
+.ground .player.right .arm.right,.player.pose-down .arm.right{transform:rotate(-58deg) translateY(20px) }
 .equal .player.center-fall{transform:translateX(-50%) rotate(88deg) scale(.72)}
 .ball{
   position:absolute;
@@ -330,10 +330,10 @@ button.secondary{background:linear-gradient(135deg,var(--fm-pink),var(--fm-orang
   .leg{bottom:-24px;width:12px;height:32px;border-radius:10px}
   .leg.left{left:25px}
   .leg.right{right:25px}
-  .sky .player.left .arm.left,.player.pose-up .arm.left{transform:rotate(-150deg) translateY(-23px) !important}
-  .sky .player.left .arm.right,.player.pose-up .arm.right{transform:rotate(150deg) translateY(-23px) !important}
-  .ground .player.right .arm.left,.player.pose-down .arm.left{transform:rotate(58deg) translateY(12px) !important}
-  .ground .player.right .arm.right,.player.pose-down .arm.right{transform:rotate(-58deg) translateY(12px) !important}
+  .sky .player.left .arm.left,.player.pose-up .arm.left{transform:rotate(-150deg) translateY(-23px) }
+  .sky .player.left .arm.right,.player.pose-up .arm.right{transform:rotate(150deg) translateY(-23px) }
+  .ground .player.right .arm.left,.player.pose-down .arm.left{transform:rotate(58deg) translateY(12px) }
+  .ground .player.right .arm.right,.player.pose-down .arm.right{transform:rotate(-58deg) translateY(12px) }
   .equal .player.center-fall{transform:translateX(-50%) rotate(88deg) scale(.55)}
   .ball{font-size:36px;top:205px}
   .sky .ball{left:12%;top:185px}
@@ -1261,8 +1261,8 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
 .equal .ball{animation:slide-ball 1.05s cubic-bezier(.2,.8,.2,1) both}
 .equal #neymarPlayer::before{opacity:0}
 .equal #neymarPlayer::after{opacity:1}
-.equal #neymarPlayer .arm.left{transform:rotate(-72deg) translateY(8px)!important}
-.equal #neymarPlayer .arm.right{transform:rotate(62deg) translateY(4px)!important}
+.equal #neymarPlayer .arm.left{transform:rotate(-72deg) translateY(8px)}
+.equal #neymarPlayer .arm.right{transform:rotate(62deg) translateY(4px)}
 .equal #neymarPlayer .leg.left{transform:rotate(58deg) translateY(-2px)}
 .equal #neymarPlayer .leg.right{transform:rotate(-46deg) translateY(2px)}
 .sky #messiPlayer .leg.left{transform:rotate(14deg)}
@@ -1295,10 +1295,10 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
 
 /* Messi final pose: both arms toward the sky */
 .sky #messiPlayer .arm.left,#messiPlayer.pose-up .arm.left{
-  transform:rotate(-172deg) translateY(-4px)!important;
+  transform:rotate(-172deg) translateY(-4px);
 }
 .sky #messiPlayer .arm.right,#messiPlayer.pose-up .arm.right{
-  transform:rotate(172deg) translateY(-4px)!important;
+  transform:rotate(172deg) translateY(-4px);
 }
 
 /* Messi and Ronaldo cinematic mode sequences */
