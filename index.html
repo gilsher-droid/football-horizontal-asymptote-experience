@@ -1659,7 +1659,9 @@ const i18nMessages={
     "degree.pause.side.denominator":"במכנה",
     "degree.pause.zero.detail":"{side}: המספר {coef} הוא למעשה {coef}·x⁰, ולכן דרגתו 0. בכתיבה המקובלת לא מציגים x⁰.",
     "degree.pause.one.detail":"{side}: האיבר {term} הוא למעשה {coef}·x¹, ולכן דרגתו 1. בכתיבה המקובלת לא כותבים את החזקה 1.",
-    "degree.pause.countdown":"מגלים את הדרגה בעוד {seconds} שניות…",
+    "degree.pause.general":"לפני שחושפים את הניתוח, נסו לזהות בעצמכם את החזקה הגבוהה ביותר במונה ובמכנה.",
+    "degree.pause.countdown":"מגלים את הניתוח בעוד {seconds} שניות…",
+    "degree.pause.countdown.one":"מגלים את הניתוח בעוד שנייה אחת…",
     "answer.none":"אין אסימפטוטה אופקית",
     "answer.undefined":"לא מוגדר",
     "error.missing":"חסר ביטוי",
@@ -1714,7 +1716,9 @@ const i18nMessages={
     "degree.pause.side.denominator":"In the denominator",
     "degree.pause.zero.detail":"{side}: the number {coef} is really {coef}·x⁰, so its degree is 0. Standard notation does not display x⁰.",
     "degree.pause.one.detail":"{side}: the term {term} is really {coef}·x¹, so its degree is 1. Standard notation does not write exponent 1.",
-    "degree.pause.countdown":"The degree will be revealed in {seconds} seconds…",
+    "degree.pause.general":"Before revealing the analysis, try to identify the highest exponent in the numerator and denominator.",
+    "degree.pause.countdown":"The analysis will be revealed in {seconds} seconds…",
+    "degree.pause.countdown.one":"The analysis will be revealed in 1 second…",
     "answer.none":"No horizontal asymptote",
     "answer.undefined":"Undefined",
     "error.missing":"An expression is missing",
@@ -1971,9 +1975,14 @@ function degreeDetailMessage(detail){
     ? i18n.t("degree.pause.zero.detail",{side,coef})
     : i18n.t("degree.pause.one.detail",{side,coef,term:implicitTerm(detail.coef)});
 }
-function degreeLearningMessage(details){return details.map(degreeDetailMessage).join(" ")}
+function degreeLearningMessage(details){
+  return details.length ? details.map(degreeDetailMessage).join(" ") : i18n.t("degree.pause.general");
+}
 function showDegreeLearningHint(details,seconds){
-  degreeLearningHint.textContent=degreeLearningMessage(details)+" "+i18n.t("degree.pause.countdown",{seconds});
+  const countdown=seconds===1
+    ? i18n.t("degree.pause.countdown.one")
+    : i18n.t("degree.pause.countdown",{seconds});
+  degreeLearningHint.textContent=degreeLearningMessage(details)+" "+countdown;
   degreeLearningHint.hidden=false;
 }
 
@@ -2017,7 +2026,7 @@ function update(skipDegreeDelay=false){
     {side:"numerator",degree:nd,coef:nc},
     {side:"denominator",degree:dd,coef:dc}
   ].filter(detail=>detail.degree===0||detail.degree===1);
-  if(!skipDegreeDelay && specialDegreeDetails.length){
+  if(!skipDegreeDelay){
     renderPlainComparison();
     scene.className="stadium waiting-degree";
     resetPlayerPoses();
