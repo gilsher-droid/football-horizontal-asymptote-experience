@@ -1495,6 +1495,10 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
         <div class="line"></div>
         <div class="poly" id="denView">6x² - 4</div>
       </div>
+      <div class="buttons function-actions">
+        <button onclick="parseAndUpdate()">נתח פונקציה</button>
+        <button class="secondary" onclick="randomFunction()">הגרל פונקציה</button>
+      </div>
     </div>
     <div class="learning-layout">
           <div class="box rule-box">
@@ -1513,10 +1517,6 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
         <textarea id="funcInput">(3x^2 + 1)/(6x^2 - 4)</textarea>
         <div class="hint">אפשר לכתוב למשל: <b>(2x^3+5)/(4x^2-1)</b> או <b>(5x^2-3)/(2x^2+7)</b>. היישומון מזהה את החזקה הגבוהה ואת המקדם שלה.</div>
         <div id="err" class="error"></div>
-        <div class="buttons">
-          <button onclick="parseAndUpdate()">נתח פונקציה</button>
-          <button class="secondary" onclick="randomFunction()">הגרל פונקציה</button>
-        </div>
       </div>
     </div>
     </div>
