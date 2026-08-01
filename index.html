@@ -1463,6 +1463,53 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
 @keyframes degree-hint-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:850px){.mode-banner.is-learning{padding:8px 10px 9px}.degree-learning-hint{font-size:11.5px;padding:7px 9px;line-height:1.35}}
 
+/* Question-first flow and optional self-quiz */
+.question-prompt{
+  max-width:760px;
+  margin:0 auto 12px;
+  color:var(--primary,var(--fm-brand-blue));
+  font-size:clamp(18px,2vw,24px);
+  font-weight:900;
+  line-height:1.45;
+}
+.self-quiz-control{
+  width:min(620px,100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px 14px;
+  margin:12px auto 0;
+  color:var(--muted,#52657a);
+  font-size:14px;
+}
+.quiz-toggle,.duration-control{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin:0;
+  font-size:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+.quiz-toggle input{width:18px;height:18px;margin:0;accent-color:var(--fm-brand-violet)}
+.duration-control select{
+  min-height:36px;
+  padding:4px 10px;
+  color:var(--ink);
+  background:#fff;
+  border:1px solid rgba(11,77,162,.28);
+  border-radius:999px;
+  font:inherit;
+  font-weight:800;
+}
+.duration-control[hidden]{display:none}
+.question-ready .scoreboard{background:linear-gradient(135deg,var(--fm-brand-blue),var(--fm-brand-blue-dark))}
+@media(max-width:850px){
+  .question-prompt{font-size:17px}
+  .self-quiz-control{margin-top:9px;font-size:12.5px}
+}
+
 </style>
 </head>
 <body>
@@ -1488,7 +1535,8 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
     </div>
   </header>
   <div class="panel">
-    <div class="function-box">
+    <div class="function-box" aria-labelledby="questionPrompt">
+      <h2 class="question-prompt" id="questionPrompt">האם לפונקציה הרציונלית הבאה יש אסימפטוטה אופקית? אם כן, מהי?</h2>
       <div class="function-title">הפונקציה הרציונלית</div>
       <div class="fraction">
         <div class="poly" id="numView">3x² + 1</div>
@@ -1496,8 +1544,24 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
         <div class="poly" id="denView">6x² - 4</div>
       </div>
       <div class="buttons function-actions">
-        <button onclick="parseAndUpdate()">נתח פונקציה</button>
-        <button class="secondary" onclick="randomFunction()">הגרל פונקציה</button>
+        <button id="analyzeButton" type="button">פתור את השאלה</button>
+        <button class="secondary" id="randomButton" type="button">שאלה חדשה</button>
+      </div>
+      <div class="self-quiz-control">
+        <label class="quiz-toggle" for="timedQuiz">
+          <input id="timedQuiz" type="checkbox" />
+          <span id="timedQuizLabel">מצב חידון עצמי: חשיפת תשובה לאחר השהיה</span>
+        </label>
+        <label class="duration-control" id="durationControl" for="quizSeconds" hidden>
+          <span id="revealAfterLabel">חשפו לאחר</span>
+          <select id="quizSeconds" aria-label="מספר שניות עד לחשיפת התשובה">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+          </select>
+          <span id="secondsLabel">שניות</span>
+        </label>
       </div>
     </div>
     <div class="learning-layout">
@@ -1622,6 +1686,7 @@ const i18nMessages={
     "language.label":"בחירת שפה",
     "language.he":"עברית",
     "language.en":"English",
+    "question.prompt":"האם לפונקציה הרציונלית הבאה יש אסימפטוטה אופקית? אם כן, מהי?",
     "function.title":"הפונקציה הרציונלית",
     "rules.title":"כללי המשחק",
     "rules.sky.title":"מונה עם חזקה גבוהה יותר",
@@ -1632,8 +1697,17 @@ const i18nMessages={
     "rules.equal.text":"מצב ניימאר → גליץ׳ ו־VAR של מקדמים",
     "input.label":"הכנס פונקציה רציונלית",
     "input.hint":"אפשר לכתוב למשל: <b>(2x^3+5)/(4x^2-1)</b> או <b>(5x^2-3)/(2x^2+7)</b>. היישומון מזהה את החזקה הגבוהה ואת המקדם שלה.",
-    "button.analyze":"נתח פונקציה",
-    "button.random":"הגרל פונקציה",
+    "button.analyze":"פתור את השאלה",
+    "button.random":"שאלה חדשה",
+    "quiz.timed":"מצב חידון עצמי: חשיפת תשובה לאחר השהיה",
+    "quiz.revealAfter":"חשפו לאחר",
+    "quiz.seconds":"שניות",
+    "quiz.secondsLabel":"מספר שניות עד לחשיפת התשובה",
+    "question.ready.title":"מה התשובה שלך?",
+    "question.ready.subtitle":"המשחק ממתין — פתרו ורק אז חשפו את התוצאה",
+    "question.ready.scoreboard":"ממתינים לשריקת הפתיחה",
+    "question.ready.explanation":"אפשר להשוות בין דרגות המונה והמכנה, ואז לבחור „פתור את השאלה”.",
+    "question.ready.answer":"?",
     "mode.sky.title":"מצב מסי",
     "mode.sky.subtitle":"המונה מנצח → אין אסימפטוטה אופקית",
     "mode.ground.title":"מצב רונאלדו ⚽",
@@ -1680,6 +1754,7 @@ const i18nMessages={
     "language.label":"Choose language",
     "language.he":"עברית",
     "language.en":"English",
+    "question.prompt":"Does the following rational function have a horizontal asymptote? If so, what is it?",
     "function.title":"The rational function",
     "rules.title":"Match rules",
     "rules.sky.title":"The numerator has the higher degree",
@@ -1690,8 +1765,17 @@ const i18nMessages={
     "rules.equal.text":"Neymar mode → slide into coefficient VAR",
     "input.label":"Enter a rational function",
     "input.hint":"Try: <b>(2x^3+5)/(4x^2-1)</b> or <b>(5x^2-3)/(2x^2+7)</b>. The app detects the highest exponent and its coefficient.",
-    "button.analyze":"Analyze function",
-    "button.random":"Random function",
+    "button.analyze":"Solve the question",
+    "button.random":"New question",
+    "quiz.timed":"Self-quiz mode: reveal the answer after a delay",
+    "quiz.revealAfter":"Reveal after",
+    "quiz.seconds":"seconds",
+    "quiz.secondsLabel":"Seconds until the answer is revealed",
+    "question.ready.title":"What is your answer?",
+    "question.ready.subtitle":"The match is waiting — solve first, then reveal the result",
+    "question.ready.scoreboard":"Waiting for kick-off",
+    "question.ready.explanation":"Compare the numerator and denominator degrees, then choose “Solve the question”.",
+    "question.ready.answer":"?",
     "mode.sky.title":"Messi mode",
     "mode.sky.subtitle":"The numerator wins → no horizontal asymptote",
     "mode.ground.title":"Ronaldo mode ⚽",
@@ -1745,6 +1829,7 @@ function translateStaticUi(){
   languageSwitcher.setAttribute("aria-label",i18n.t("language.label"));
   document.querySelector('[data-locale="he"]').textContent=i18n.t("language.he");
   document.querySelector('[data-locale="en"]').textContent=i18n.t("language.en");
+  document.querySelector(".question-prompt").textContent=i18n.t("question.prompt");
   document.querySelector(".function-title").textContent=i18n.t("function.title");
   document.querySelector(".rule-box h2").textContent=i18n.t("rules.title");
   const ruleCards=document.querySelectorAll(".rule-card");
@@ -1759,6 +1844,10 @@ function translateStaticUi(){
   const actionButtons=document.querySelectorAll(".buttons button");
   actionButtons[0].textContent=i18n.t("button.analyze");
   actionButtons[1].textContent=i18n.t("button.random");
+  document.getElementById("timedQuizLabel").textContent=i18n.t("quiz.timed");
+  document.getElementById("revealAfterLabel").textContent=i18n.t("quiz.revealAfter");
+  document.getElementById("secondsLabel").textContent=i18n.t("quiz.seconds");
+  document.getElementById("quizSeconds").setAttribute("aria-label",i18n.t("quiz.secondsLabel"));
   document.querySelector(".var-screen strong").textContent=i18n.t("var.title");
   document.querySelector(".var-screen span").textContent=i18n.t("var.subtitle");
   document.querySelector(".celebration-ronaldo").textContent=i18n.t("celebration.ronaldo");
@@ -1789,6 +1878,11 @@ const funcInput=document.getElementById("funcInput");
 const degreeLearningHint=document.getElementById("degreeLearningHint");
 const messiPlayer=document.getElementById("messiPlayer");
 const ronaldoPlayer=document.getElementById("ronaldoPlayer");
+const analyzeButton=document.getElementById("analyzeButton");
+const randomButton=document.getElementById("randomButton");
+const timedQuiz=document.getElementById("timedQuiz");
+const durationControl=document.getElementById("durationControl");
+const quizSeconds=document.getElementById("quizSeconds");
 
 function toSup(n){
   return String(n).split("").map(c=>"⁰¹²³⁴⁵⁶⁷⁸⁹"[c]||c).join("");
@@ -1946,6 +2040,7 @@ function renderComparison(focus){
 let degreeRevealTimer=null;
 let degreeCountdownTimer=null;
 let degreeRevealVersion=0;
+let answerRevealed=false;
 
 function cancelDegreeReveal(){
   if(degreeRevealTimer) clearTimeout(degreeRevealTimer);
@@ -1993,7 +2088,7 @@ function resetPlayerPoses(){
   ronaldoPlayer.classList.remove("pose-down");
 }
 
-function parseAndUpdate(){
+function parseInputState(){
   cancelDegreeReveal();
   degreeLearningHint.hidden=true;
   modeBanner.classList.remove("is-learning");
@@ -2011,13 +2106,40 @@ function parseAndUpdate(){
     numView.textContent=pretty(normalizedN);
     denView.textContent=pretty(normalizedD);
     funcInput.value="("+normalizedN+")/("+normalizedD+")";
-    update();
+    return true;
   }catch(e){
     err.textContent=e.message;
+    funcInput.focus();
+    return false;
   }
 }
 
-function update(skipDegreeDelay=false){
+function renderQuestion(){
+  cancelDegreeReveal();
+  answerRevealed=false;
+  degreeLearningHint.hidden=true;
+  modeBanner.classList.remove("is-learning");
+  renderPlainComparison();
+  scene.className="stadium question-ready";
+  resetPlayerPoses();
+  modeTitle.textContent=i18n.t("question.ready.title");
+  modeSubtitle.textContent=i18n.t("question.ready.subtitle");
+  scoreboard.textContent=i18n.t("question.ready.scoreboard");
+  explanation.textContent=i18n.t("question.ready.explanation");
+  answer.textContent=i18n.t("question.ready.answer");
+}
+
+function prepareQuestion(){
+  if(parseInputState()) renderQuestion();
+}
+
+function parseAndUpdate(){
+  if(!parseInputState()) return;
+  if(timedQuiz.checked) update(false,Number(quizSeconds.value));
+  else update(true);
+}
+
+function update(skipDegreeDelay=false,duration=5){
   cancelDegreeReveal();
   const revealVersion=++degreeRevealVersion;
   const nd=+numDeg.value;
@@ -2029,6 +2151,7 @@ function update(skipDegreeDelay=false){
     {side:"denominator",degree:dd,coef:dc}
   ].filter(detail=>detail.degree===0||detail.degree===1);
   if(!skipDegreeDelay){
+    answerRevealed=false;
     renderPlainComparison();
     scene.className="stadium waiting-degree";
     resetPlayerPoses();
@@ -2038,7 +2161,7 @@ function update(skipDegreeDelay=false){
     scoreboard.textContent=i18n.t(specialDegreeDetails.length ? "degree.pause.scoreboard" : "degree.pause.scoreboard.general");
     explanation.textContent=degreeLearningMessage(specialDegreeDetails);
     answer.textContent=i18n.t("degree.pause.answer");
-    let remaining=5;
+    let remaining=duration;
     showDegreeLearningHint(specialDegreeDetails,remaining);
     degreeCountdownTimer=setInterval(()=>{remaining-=1;if(remaining>0)showDegreeLearningHint(specialDegreeDetails,remaining)},1000);
     degreeRevealTimer=setTimeout(()=>{
@@ -2046,10 +2169,11 @@ function update(skipDegreeDelay=false){
       cancelDegreeReveal();
       degreeLearningHint.hidden=true;
       modeBanner.classList.remove("is-learning");
-      update(true);
-    },5000);
+      update(true,duration);
+    },duration*1000);
     return;
   }
+  answerRevealed=true;
   degreeLearningHint.hidden=true;
   modeBanner.classList.remove("is-learning");
   scoreboard.textContent=i18n.t("scoreboard",{nd,dd});
@@ -2089,7 +2213,7 @@ function update(skipDegreeDelay=false){
 
 function loadExample(s){
   funcInput.value=s;
-  parseAndUpdate();
+  prepareQuestion();
 }
 
 function randomFunction(){
@@ -2121,10 +2245,20 @@ document.querySelectorAll(".language-option").forEach(button=>{
 });
 window.addEventListener("footballasymptote:localechange",()=>{
   translateStaticUi();
-  update();
+  if(answerRevealed) update(true);
+  else renderQuestion();
+});
+analyzeButton.addEventListener("click",parseAndUpdate);
+randomButton.addEventListener("click",randomFunction);
+timedQuiz.addEventListener("change",()=>{
+  durationControl.hidden=!timedQuiz.checked;
+});
+funcInput.addEventListener("keydown",event=>{
+  if((event.ctrlKey||event.metaKey)&&event.key==="Enter") parseAndUpdate();
 });
 translateStaticUi();
-parseAndUpdate();
+prepareQuestion();
+requestAnimationFrame(()=>analyzeButton.focus({preventScroll:true}));
 </script>
 </body>
 </html>
