@@ -1588,6 +1588,8 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
 
 </style>
   <script src="/simulator-access-guard.js"></script>
+<link rel="stylesheet" href="language-support.css">
+<script src="language-support.js" defer></script>
 </head>
 <body>
 <div class="wrap">
@@ -1607,6 +1609,7 @@ html[dir="ltr"] .formula{border-right:1px solid var(--border);border-left:6px so
       <div class="language-switcher" role="group" aria-label="בחירת שפה">
         <button class="language-option" type="button" data-locale="he" lang="he">עברית</button>
         <button class="language-option" type="button" data-locale="en" lang="en">English</button>
+<button class="language-option" type="button" data-locale="ar" lang="ar" dir="rtl" aria-pressed="false">العربية</button>
       </div>
       <a class="fundamatics-home-link" href="https://fundamatics.com/">חזרה ל־Fundamatics</a>
     </div>
@@ -1725,7 +1728,12 @@ class I18n {
     this.locale=this.getStoredLocale();
     this.applyDocumentLanguage();
   }
-  getStoredLocale(){
+  getStoredLocale() {
+    const requested = new URLSearchParams(window.location.search).get("lang");
+    if (this.supportedLocales.includes(requested)) {
+      try { window.localStorage.setItem(this.storageKey, requested); } catch (_) {}
+      return requested;
+    }
     try{
       const storedLocale=window.localStorage.getItem(this.storageKey);
       if(this.supportedLocales.includes(storedLocale)) return storedLocale;
@@ -1741,7 +1749,7 @@ class I18n {
   }
   applyDocumentLanguage(){
     document.documentElement.lang=this.locale;
-    document.documentElement.dir=this.locale==="he"?"rtl":"ltr";
+    document.documentElement.dir=["he", "ar"].includes(this.locale)?"rtl":"ltr";
   }
   t(key,replacements={}){
     const localeMessages=this.messages[this.locale]||{};
@@ -1751,7 +1759,75 @@ class I18n {
   }
 }
 
-const i18nMessages={
+const i18nMessages = {
+  ar: {
+    "document.title": "خطوط التقارب الأفقية في كرة القدم | Fundamatics",
+    "document.description": "تجربة تفاعلية في كرة القدم لتعلّم خطوط التقارب الأفقية.",
+    "header.aria": "خطوط التقارب الأفقية في كرة القدم من Fundamatics",
+    "header.kicker": "التعلّم من خلال اللعب",
+    "header.title": "خطوط التقارب الأفقية في كرة القدم",
+    "header.subtitle": "من يتحكم بالمباراة، البسط أم المقام؟ قارن الدرجات واكتشف إلى أين تتجه الدالة.",
+    "header.home": "العودة إلى Fundamatics",
+    "language.label": "اختر اللغة",
+    "language.he": "עברית",
+    "language.en": "English",
+    "question.prompt": "هل للدالة النسبية التالية خط تقارب أفقي؟ إذا كان كذلك، فما هو؟",
+    "function.title": "الدالة النسبية",
+    "rules.title": "قواعد المباراة",
+    "rules.sky.title": "درجة البسط أعلى",
+    "rules.sky.text": "وضع ميسي ← لا يوجد خط تقارب أفقي",
+    "rules.ground.title": "درجة المقام أعلى",
+    "rules.ground.text": "وضع رونالدو ← ⁦y = 0⁩",
+    "rules.equal.title": "درجتان متساويتان",
+    "rules.equal.text": "وضع نيمار ← ننزلق إلى فحص المعاملين بتقنية VAR",
+    "input.label": "أدخل دالة نسبية",
+    "input.hint": "جرّب: <b dir=\"ltr\">(2x^3+5)/(4x^2-1)</b> أو <b dir=\"ltr\">(5x^2-3)/(2x^2+7)</b>. يحدد التطبيق أعلى أس ومعامله.",
+    "button.analyze": "حلّ السؤال",
+    "button.random": "سؤال جديد",
+    "quiz.timed": "اختبار ذاتي: أظهر الإجابة بعد مهلة",
+    "quiz.revealAfter": "أظهر بعد",
+    "quiz.seconds": "ثوانٍ",
+    "quiz.secondsLabel": "عدد الثواني حتى ظهور الإجابة",
+    "question.ready.title": "ما إجابتك؟",
+    "question.ready.subtitle": "المباراة تنتظر، حلّ أولًا ثم اكشف النتيجة",
+    "question.ready.scoreboard": "بانتظار صافرة البداية",
+    "question.ready.explanation": "قارن درجتي البسط والمقام، ثم اختر «حلّ السؤال».",
+    "question.ready.answer": "؟",
+    "mode.sky.title": "وضع ميسي",
+    "mode.sky.subtitle": "البسط يفوز ← لا يوجد خط تقارب أفقي",
+    "mode.ground.title": "وضع رونالدو ⚽",
+    "mode.ground.subtitle": "المقام يفوز ← ⁦y = 0⁩",
+    "mode.equal.title": "وضع نيمار 🤸",
+    "mode.equal.subtitle": "انزلق ← افحص المعاملين بتقنية VAR",
+    "scoreboard": "البسط ⁦{nd}⁩ : ⁦{dd}⁩ المقام",
+    "var.title": "VAR",
+    "var.subtitle": "فحص المعاملين",
+    "celebration.ronaldo": "سييييي!",
+    "result.explanation": "ماذا تخبرنا المباراة؟",
+    "result.asymptote": "خط التقارب الأفقي",
+    "explanation.sky": "أعلى درجة هي ⁦{nd}⁩ في البسط و⁦{dd}⁩ في المقام. البسط يتحكم بالمباراة، لذلك لا تستقر الدالة عند ارتفاع ثابت.",
+    "explanation.ground": "أعلى درجة هي ⁦{dd}⁩ في المقام و⁦{nd}⁩ في البسط. المقام يتحكم بالمباراة، لذلك يقترب الكسر من الصفر.",
+    "explanation.equal": "الدرجتان متساويتان: أعلى درجة في كليهما هي ⁦{nd}⁩. ننتقل إلى فحص المعاملين بتقنية VAR ونفحص النسبة ⁦{nc}/{dc}⁩.",
+    "focus.degree": "الأس ⁦{value}⁩",
+    "focus.coefficient": "المعامل ⁦{value}⁩",
+    "degree.pause.title": "وقفة رياضية",
+    "degree.pause.subtitle": "اكتشف الأس المخفي قبل إظهار النتيجة",
+    "degree.pause.scoreboard": "نفحص أسًا مخفيًا…",
+    "degree.pause.scoreboard.general": "نستعد للتحليل…",
+    "degree.pause.answer": "لحظة واحدة…",
+    "degree.pause.side.numerator": "في البسط",
+    "degree.pause.side.denominator": "في المقام",
+    "degree.pause.zero.detail": "{side}: العدد ⁦{coef}⁩ هو في الحقيقة ⁦{coef}·x⁰⁩، لذا درجته 0. لا نكتب ⁦x⁰⁩ عادةً.",
+    "degree.pause.one.detail": "{side}: الحد ⁦{term}⁩ هو في الحقيقة ⁦{coef}·x¹⁩، لذا درجته 1. لا نكتب الأس 1 عادةً.",
+    "degree.pause.general": "قبل إظهار التحليل، حاول تحديد أعلى أس في البسط والمقام.",
+    "degree.pause.countdown": "سيظهر التحليل بعد ⁦{seconds}⁩ ثانية…",
+    "degree.pause.countdown.one": "سيظهر التحليل بعد ثانية واحدة…",
+    "answer.none": "لا يوجد خط تقارب أفقي",
+    "answer.undefined": "غير معرّف",
+    "error.missing": "هناك تعبير ناقص",
+    "error.term": "تعذّرت قراءة هذا الحد: ⁦{term}⁩",
+    "error.fraction": "اكتب الدالة على الصورة بسط/مقام، مثل ⁦(3x^2+1)/(6x^2-4)⁩"
+},
   he:{
     "document.title":"אסימפטוטה אופקית בכדורגל | Fundamatics",
     "document.description":"יישומון אינטראקטיבי ללימוד אסימפטוטה אופקית באמצעות משחק כדורגל.",
