@@ -1,0 +1,10 @@
+/* Optional privacy controls; no changes to the teaching layout. */
+.football-analytics-panel{position:fixed;z-index:10000;inset:auto 12px 52px auto;width:min(470px,calc(100vw - 24px));max-height:calc(100dvh - 76px);overflow:auto;padding:18px;background:#fff;color:#102033;border:2px solid #0b3a8a;border-radius:16px;box-shadow:0 8px 32px #10203333;font:14px/1.5 Manrope,Arial,sans-serif;text-align:start}
+.football-analytics-panel[hidden]{display:none}
+.football-analytics-panel h2{margin:0 0 8px;font-size:19px;line-height:1.3}
+.football-analytics-panel p{margin:0 0 12px}
+.football-analytics-controls{display:flex;flex-wrap:wrap;gap:8px}
+.football-analytics-controls button,.football-analytics-preferences{font:700 13px/1.35 Manrope,Arial,sans-serif;cursor:pointer;padding:9px 13px;border:1px solid #0b3a8a;border-radius:10px;color:#0b3a8a;background:white}
+.football-analytics-controls button:first-child{background:#0b3a8a;color:white}
+.football-analytics-preferences{position:fixed;z-index:9999;inset:auto 12px 10px auto;box-shadow:0 2px 12px #10203322}
+.football-analytics-controls button:focus-visible,.football-analytics-preferences:focus-visible{outline:3px solid #cf4245;outline-offset:3px}
