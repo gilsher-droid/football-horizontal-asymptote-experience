@@ -12,6 +12,13 @@
   const simulatorId = simulatorByHost[window.location.hostname];
   if (!simulatorId) return;
 
+  // Public teaching access through 31 December 2026, Jerusalem time.
+  const publicAccessEnd = Date.parse("2027-01-01T00:00:00+02:00");
+  if (simulatorId === "asymptote" && Date.now() < publicAccessEnd) {
+    document.documentElement.dataset.accessGranted = "true";
+    return;
+  }
+
   const endpoint = "https://fundamatics.com/api/simulator-access";
   const storageKey = `fundamatics-access-${simulatorId}`;
   const requested = new URLSearchParams(location.search).get("lang");
@@ -162,3 +169,4 @@
     start();
   }
 })();
+
